@@ -1,0 +1,426 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "Login — Aegle";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegle — Login</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3A6BC4 0%, #4A7FD4 40%, #5B8FE8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+            /* Soft background bubbles for depth */
+            body::before {
+                content: '';
+                position: absolute;
+                top: -120px;
+                left: -120px;
+                width: 420px;
+                height: 420px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.07);
+                pointer-events: none;
+            }
+
+            body::after {
+                content: '';
+                position: absolute;
+                bottom: -100px;
+                right: -80px;
+                width: 360px;
+                height: 360px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.05);
+                pointer-events: none;
+            }
+
+        /* ── LOGIN CARD ─────────────────────────── */
+        .login-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 44px 40px 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 24px 64px rgba(30,42,69,0.22), 0 4px 16px rgba(30,42,69,0.10);
+            position: relative;
+            z-index: 10;
+            animation: cardIn 0.45s cubic-bezier(.4,0,.2,1);
+        }
+
+        @@keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ── LOGO BLOCK ─────────────────────────── */
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg,#4A7FD4,#3A6BC4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(74,127,212,0.35);
+        }
+
+            .logo-icon svg {
+                color: #fff;
+            }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1E2A45;
+            letter-spacing: -0.5px;
+        }
+
+        .login-tagline {
+            text-align: center;
+            font-size: 12.5px;
+            color: #7B8FAD;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        /* ── FORM FIELDS ────────────────────────── */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4A5568;
+            margin-bottom: 7px;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #A0AEC0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 46px;
+            padding: 0 14px 0 40px;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: #1E2A45;
+            background: #F8FAFF;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+            .form-input::placeholder {
+                color: #A0AEC0;
+            }
+
+            .form-input:focus {
+                border-color: #4A7FD4;
+                background: #fff;
+                box-shadow: 0 0 0 3px rgba(74,127,212,0.12);
+            }
+
+        /* Password toggle eye */
+        .eye-btn {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #A0AEC0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: color .15s;
+        }
+
+            .eye-btn:hover {
+                color: #4A7FD4;
+            }
+
+        /* ── REMEMBER ME ────────────────────────── */
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .remember-check {
+            width: 17px;
+            height: 17px;
+            accent-color: #4A7FD4;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .remember-label {
+            font-size: 13px;
+            color: #4A5568;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* ── ERROR MESSAGE ──────────────────────── */
+        .error-msg {
+            display: none;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #DC2626;
+            margin-bottom: 18px;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .error-msg.show {
+                display: flex;
+            }
+
+        /* ── SUBMIT BUTTON ──────────────────────── */
+        .login-btn {
+            width: 100%;
+            height: 48px;
+            background: linear-gradient(135deg, #5B8FE8, #3A6BC4);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s, filter .15s;
+            box-shadow: 0 4px 16px rgba(74,127,212,0.35);
+            letter-spacing: 0.02em;
+        }
+
+            .login-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 8px 24px rgba(74,127,212,0.40);
+                filter: brightness(1.05);
+            }
+
+            .login-btn:active {
+                transform: translateY(0);
+                filter: brightness(0.97);
+            }
+
+        /* ── FOOTER ─────────────────────────────── */
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11.5px;
+            color: #A0AEC0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+
+  <!-- Logo -->
+  <div class="login-logo">
+    <div class="logo-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="3" width="20" height="18" rx="2"/>
+        <rect x="5"  y="14" width="3" height="5" fill="currentColor" stroke="none" opacity=".55"/>
+        <rect x="10" y="11" width="3" height="8" fill="currentColor" stroke="none" opacity=".75"/>
+        <rect x="15" y="7"  width="3" height="12" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <span class="logo-text">Aegle</span>
+  </div>
+  <div class="login-tagline">Procurement Analytics Dashboard</div>
+
+  <!-- Error message -->
+  <div class="error-msg" id="errorMsg">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    Invalid username or password. Please try again.
+  </div>
+
+  <!-- Form -->
+  <form id="loginForm" onsubmit="handleLogin(event)">
+
+    <!-- Username -->
+    <div class="form-group">
+      <label class="form-label" for="username">Username</label>
+      <div class="input-wrap">
+        <span class="input-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <input type="text" id="username" class="form-input" placeholder="Enter your username" autocomplete="username" />
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label class="form-label" for="password">Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+        <input type="password" id="password" class="form-input" placeholder="Enter your password" autocomplete="current-password" />
+        <button type="button" class="eye-btn" onclick="togglePassword()" id="eyeBtn">
+          <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Remember me -->
+    <div class="remember-row">
+      <input type="checkbox" id="rememberMe" class="remember-check" />
+      <label for="rememberMe" class="remember-label">Remember me</label>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="login-btn">Sign In</button>
+
+  </form>
+
+  <div class="login-footer">© 2025-26 Aegle · Procurement Intelligence</div>
+
+</div>
+
+<script>
+    const VALID_USER = 'user';
+    const VALID_PASS = 'password';
+    const REMEMBER_KEY = 'aegle_remembered';
+    const SESSION_KEY = 'aegle_session';
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // Block back button on login page
+        history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', () => {
+            history.pushState(null, '', window.location.href);
+        });
+
+        // If session already active go straight to dashboard
+        if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+            window.location.replace('/');
+            return;
+        }
+
+        // Auto-fill remembered credentials
+        const saved = localStorage.getItem(REMEMBER_KEY);
+        if (saved) {
+            try {
+                const { u, p } = JSON.parse(saved);
+                document.getElementById('username').value = u || '';
+                document.getElementById('password').value = p || '';
+                document.getElementById('rememberMe').checked = true;
+            } catch (e) { }
+        }
+    });
+
+    function handleLogin(e) {
+        e.preventDefault();
+
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        const rem = document.getElementById('rememberMe').checked;
+        const errEl = document.getElementById('errorMsg');
+
+        if (u === VALID_USER && p === VALID_PASS) {
+            errEl.classList.remove('show');
+
+            // Save or clear remember me
+            if (rem) {
+                localStorage.setItem(REMEMBER_KEY, JSON.stringify({ u, p }));
+            } else {
+                localStorage.removeItem(REMEMBER_KEY);
+            }
+
+            // Mark session
+            sessionStorage.setItem(SESSION_KEY, 'true');
+
+            // Go to dashboard — use replace so login is not in history
+            window.location.replace('/');
+
+        } else {
+            errEl.classList.add('show');
+            document.getElementById('password').value = '';
+            document.getElementById('password').focus();
+        }
+    }
+
+    function togglePassword() {
+        const input = document.getElementById('password');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.innerHTML = `
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>`;
+        } else {
+            input.type = 'password';
+            icon.innerHTML = `
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>`;
+        }
+    }
+</script>
+</body>
+</html>

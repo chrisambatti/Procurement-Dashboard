@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Aegle</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Dapper — lightweight micro-ORM for MySQL queries -->
+    <PackageReference Include="Dapper"                        Version="2.1.35"  />
+    <!-- MySqlConnector — ADO.NET driver (fully async, MIT license) -->
+    <PackageReference Include="MySqlConnector"               Version="2.3.7"   />
+  </ItemGroup>
+
+</Project>

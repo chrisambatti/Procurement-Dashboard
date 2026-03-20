@@ -1,0 +1,736 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "Aegle Procurement Dashboard";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aegle — Procurement Dashboard</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        :root {
+            --bg:     #F4F6FB;
+            --header: #4A7FD4;
+            --card:   #FFFFFF;
+            --radius: 10px;
+            --shadow: 0 2px 12px rgba(74,127,212,0.10);
+            --text:   #1E2A45;
+            --muted:  #7B8FAD;
+            --blue:   #4A7FD4;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 13px;
+        }
+
+        /* ── HEADER ───────────────────────────────── */
+        .header {
+            background: var(--header);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 300;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 17px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .header-sep {
+            width: 1px;
+            height: 22px;
+            background: rgba(255,255,255,0.3);
+            margin: 0 16px;
+            flex-shrink: 0;
+        }
+
+        .header-spacer { flex: 1; }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        /* ── DEPARTMENT BUTTON (visual only, no dropdown) ── */
+        .dept-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 8px;
+            padding: 5px 12px;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        .dept-btn-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #A7F3D0;
+            flex-shrink: 0;
+        }
+
+        /* ── BELL WRAPPER ─────────────────────────── */
+        .bell-wrap { position: relative; }
+
+        .header-bell {
+            position: relative;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background .15s;
+        }
+        .header-bell:hover { background: rgba(255,255,255,0.12); }
+        .header-bell svg { color: rgba(255,255,255,0.9); }
+
+        .bell-dot {
+            position: absolute;
+            top: 7px; right: 7px;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #4ADE80;
+            border: 1.5px solid var(--header);
+        }
+
+        /* ── NOTIFICATION DROPDOWN ────────────────── */
+        .notif-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 320px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(74,127,212,0.18), 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            z-index: 999;
+            animation: dropIn 0.18s ease;
+        }
+        .notif-dropdown.open { display: block; }
+
+        .notif-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px 10px;
+            border-bottom: 1px solid #EEF2FA;
+        }
+        .notif-title { font-size: 13px; font-weight: 700; color: #1E2A45; }
+        .notif-count { font-size: 11px; font-weight: 600; color: #fff; background: #5B8FE8; padding: 2px 8px; border-radius: 20px; }
+
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 11px 16px;
+            cursor: pointer;
+            transition: background .12s;
+            border-bottom: 1px solid #F4F6FB;
+        }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-item:hover { background: #F8FAFF; }
+        .notif-item.unread { background: #F0F5FF; }
+        .notif-item.unread:hover { background: #E8F0FF; }
+
+        .notif-icon-wrap {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .notif-icon-wrap.blue   { background: #EEF4FF; color: #5B8FE8; }
+        .notif-icon-wrap.green  { background: #ECFDF5; color: #2CB5A0; }
+        .notif-icon-wrap.orange { background: #FFFBEB; color: #F0A030; }
+        .notif-icon-wrap.purple { background: #F5F3FF; color: #7C6FD4; }
+        .notif-icon-wrap.red    { background: #FEF2F2; color: #E85B6F; }
+
+        .notif-body { flex: 1; min-width: 0; }
+        .notif-msg  { font-size: 12px; color: #2D3A54; line-height: 1.45; }
+        .notif-msg strong { color: #1E2A45; font-weight: 600; }
+        .notif-time { font-size: 10.5px; color: #7B8FAD; margin-top: 3px; }
+
+        .notif-unread-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #5B8FE8;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        .notif-footer {
+            padding: 11px 16px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #5B8FE8;
+            cursor: pointer;
+            transition: background .12s;
+            border-top: 1px solid #EEF2FA;
+        }
+        .notif-footer:hover { background: #F0F5FF; }
+
+        /* ── USER WRAPPER ─────────────────────────── */
+        .user-wrap { position: relative; }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.95);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: background .15s;
+            user-select: none;
+        }
+        .header-user:hover { background: rgba(255,255,255,0.12); }
+
+        .user-avatar {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: #fff;
+            flex-shrink: 0;
+        }
+
+        /* ── USER DROPDOWN ────────────────────────── */
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 245px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(74,127,212,0.18), 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            z-index: 999;
+            animation: dropIn 0.18s ease;
+        }
+        .user-dropdown.open { display: block; }
+
+        @@keyframes dropIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            padding: 16px;
+            background: linear-gradient(135deg, #5B8FE8, #3A6BC4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dropdown-avatar {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; color: #fff;
+            flex-shrink: 0;
+        }
+        .dropdown-name { color: #fff; font-weight: 700; font-size: 13px; line-height: 1.2; }
+        .dropdown-role { color: rgba(255,255,255,0.75); font-size: 10.5px; margin-top: 2px; }
+        .dropdown-divider { height: 1px; background: #F0F4FA; margin: 4px 0; }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #2D3A54;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .12s;
+        }
+        .dropdown-item:hover { background: #F4F6FB; }
+        .dropdown-item svg { color: #7B8FAD; flex-shrink: 0; }
+        .dropdown-item.logout { color: #EF4444; }
+        .dropdown-item.logout svg { color: #EF4444; }
+        .dropdown-item.logout:hover { background: #FEF2F2; }
+
+        /* ── PAGE ─────────────────────────────────── */
+        .page {
+            height: calc(100vh - 48px);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 8px 14px;
+            overflow: hidden;
+        }
+
+        /* ── KPI STRIP ────────────────────────────── */
+        .kpi-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #5B8FE8 0%, #4A7FD4 50%, #3A6BC4 100%);
+            border-radius: var(--radius);
+            padding: 14px 16px 12px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(74,127,212,0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100px;
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: -20px; right: -20px;
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+        }
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px; left: -10px;
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .kpi-label  { font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+        .kpi-icon   { position: absolute; top: 12px; right: 12px; color: rgba(255,255,255,0.2); }
+        .kpi-value  { font-size: 22px; font-weight: 700; line-height: 1.15; color: #fff; word-break: break-word; }
+        .kpi-sub    { font-size: 10.5px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+        .kpi-growth { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; margin-top: 6px; }
+        .kpi-growth.up   { color: #A7F3D0; }
+        .kpi-growth.down { color: #FECACA; }
+
+        /* ── CARD ─────────────────────────────────── */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+        .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2px; }
+        .card-title  { font-size: 13px; font-weight: 700; color: var(--blue); }
+        .card-badge  { font-size: 10px; font-weight: 600; color: var(--muted); background: #EEF2FA; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+        .card-sub    { font-size: 10.5px; color: var(--muted); margin-bottom: 8px; }
+
+        /* ── GRIDS ────────────────────────────────── */
+        .top-div    { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 8px; flex: 1; min-height: 0; }
+        .bottom-div { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 8px; flex: 1; min-height: 0; }
+
+        /* ── PIE ──────────────────────────────────── */
+        .pie-body       { display: flex; gap: 10px; align-items: center; flex: 1; min-height: 0; }
+        .pie-legend     { flex: 0 0 46%; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+        .legend-row     { display: flex; align-items: center; gap: 6px; }
+        .legend-dot     { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .legend-name    { flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; }
+        .legend-pct     { font-weight: 700; color: var(--blue); font-size: 11px; white-space: nowrap; }
+        .legend-divider { border: none; border-top: 1px solid #EEF2FA; margin: 6px 0; }
+        .legend-total   { display: flex; justify-content: space-between; align-items: center; }
+        .legend-total-label { color: var(--muted); font-size: 11px; }
+        .legend-total-val   { font-weight: 700; color: var(--text); font-size: 12px; }
+        .pie-chart-wrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+        .pie-chart-wrap canvas { max-height: 175px; }
+        .bar-chart-wrap  { flex: 1; min-height: 0; position: relative; }
+        .hbar-chart-wrap { flex: 1; min-height: 0; position: relative; }
+
+        /* ── RANK LIST ────────────────────────────── */
+        .rank-list { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: space-between; }
+        .rank-row {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 8px; border-radius: 7px; background: #F8FAFF;
+            opacity: 0; transform: translateY(6px);
+            animation: slideIn 0.35s ease forwards;
+        }
+        @@keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+
+        .rank-badge  { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+        .rank-badge.gold   { background: #FEF3C7; }
+        .rank-badge.silver { background: #F1F5F9; }
+        .rank-badge.bronze { background: #FEF0E6; }
+        .rank-badge.plain  { background: #EEF2FA; font-weight: 700; font-size: 12px; color: #4A6FA5; }
+        .rank-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#5B8FE8,#7C6FD4); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 11px; flex-shrink: 0; }
+        .rank-info   { flex: 1; min-width: 0; }
+        .rank-name   { font-size: 11px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .rank-orders { font-size: 10px; color: var(--muted); }
+        .rank-pill   { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+        .rank-pill.p1 { background: #FEF3C7; color: #92400E; }
+        .rank-pill.p2 { background: #F1F5F9; color: #374151; }
+        .rank-pill.p3 { background: #FEF0E6; color: #7C2D12; }
+        .rank-pill.p4, .rank-pill.p5 { background: #EEF2FA; color: #6B7280; }
+
+        /* ── PROGRESS BARS ────────────────────────── */
+        .progress-list   { display: flex; flex-direction: column; gap: 8px; flex: 1; justify-content: space-between; }
+        .prog-row-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; gap: 6px; }
+        .prog-dot        { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .prog-rank-circle { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+        .prog-name   { flex: 1; font-size: 11px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .prog-amount { font-size: 11.5px; font-weight: 700; color: var(--text); white-space: nowrap; }
+        .prog-track  { width: 100%; height: 5px; border-radius: 3px; background: #EEF2FA; overflow: hidden; }
+        .prog-fill   { height: 100%; border-radius: 3px; width: 0%; transition: width 1200ms cubic-bezier(.4,0,.2,1); }
+
+        /* ── OVERLAY ──────────────────────────────── */
+        .overlay { display: none; position: fixed; inset: 0; z-index: 150; }
+        .overlay.open { display: block; }
+    </style>
+</head>
+<body>
+
+<!-- SESSION GUARD -->
+<script>
+    (function () {
+        if (sessionStorage.getItem('aegle_session') !== 'true') {
+            window.location.replace('/Account/Login');
+            return;
+        }
+        history.pushState(null, '', window.location.href);
+        window.addEventListener('popstate', function () {
+            if (sessionStorage.getItem('aegle_session') !== 'true') {
+                window.location.replace('/Account/Login');
+            } else {
+                history.pushState(null, '', window.location.href);
+            }
+        });
+    })();
+</script>
+
+<!-- HEADER -->
+<header class="header">
+
+    <!-- Logo -->
+    <div class="header-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="18" rx="2"/>
+            <rect x="5"  y="14" width="3" height="5" fill="currentColor" stroke="none" opacity=".55"/>
+            <rect x="10" y="11" width="3" height="8" fill="currentColor" stroke="none" opacity=".75"/>
+            <rect x="15" y="7"  width="3" height="12" fill="currentColor" stroke="none"/>
+        </svg>
+        Aegle
+    </div>
+
+    <div class="header-sep"></div>
+
+    <!-- Department button — visual only, no dropdown, no onclick -->
+    <div class="dept-btn">
+        <div class="dept-btn-dot"></div>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M7 12h10M11 18h2"/>
+        </svg>
+        <span>All Departments</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M6 9l6 6 6-6"/>
+        </svg>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="header-right">
+
+        <!-- Bell — own wrapper -->
+        <div class="bell-wrap">
+            <div class="header-bell" onclick="toggleBell(event)">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                </svg>
+                <span class="bell-dot" id="bellDot"></span>
+            </div>
+
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-header">
+                    <span class="notif-title">Notifications</span>
+                    <span class="notif-count" id="notifCount">3 new</span>
+                </div>
+                <div class="notif-item unread" onclick="markRead(this)">
+                    <div class="notif-icon-wrap blue">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-msg">New order from <strong>AL RAMA INT'L</strong> worth $3.2M</div>
+                        <div class="notif-time">2 minutes ago</div>
+                    </div>
+                    <div class="notif-unread-dot"></div>
+                </div>
+                <div class="notif-item unread" onclick="markRead(this)">
+                    <div class="notif-icon-wrap green">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-msg"><strong>Arabian Automobiles</strong> order completed successfully</div>
+                        <div class="notif-time">1 hour ago</div>
+                    </div>
+                    <div class="notif-unread-dot"></div>
+                </div>
+                <div class="notif-item unread" onclick="markRead(this)">
+                    <div class="notif-icon-wrap orange">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-msg"><strong>Al Shafar</strong> order pending approval since 3 days</div>
+                        <div class="notif-time">3 days ago</div>
+                    </div>
+                    <div class="notif-unread-dot"></div>
+                </div>
+                <div class="notif-item" onclick="markRead(this)">
+                    <div class="notif-icon-wrap purple">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-msg">Q2 procurement report is ready to download</div>
+                        <div class="notif-time">Yesterday</div>
+                    </div>
+                </div>
+                <div class="notif-item" onclick="markRead(this)">
+                    <div class="notif-icon-wrap red">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <div class="notif-msg"><strong>Al Manhal</strong> order was cancelled</div>
+                        <div class="notif-time">2 days ago</div>
+                    </div>
+                </div>
+                <div class="notif-footer" onclick="markAllRead()">Mark all as read</div>
+            </div>
+        </div>
+
+        <div class="header-sep"></div>
+
+        <!-- User — own wrapper -->
+        <div class="user-wrap">
+            <div class="header-user" onclick="toggleUser(event)">
+                <div class="user-avatar">AL</div>
+                ANDROULLA LEONIDOU
+                <svg id="userChevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform .2s">
+                    <path d="M6 9l6 6 6-6"/>
+                </svg>
+            </div>
+
+            <div class="user-dropdown" id="userDropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-avatar">AL</div>
+                    <div>
+                        <div class="dropdown-name">Androulla Leonidou</div>
+                        <div class="dropdown-role">Group Chief Procurement Officer</div>
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item" onclick="closeAll()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    View Profile
+                </div>
+                <div class="dropdown-item" onclick="closeAll()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    Account Settings
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item logout" onclick="handleLogout()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </div>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<!-- Click-outside overlay -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- PAGE -->
+<main class="page">
+
+    <!-- KPI STRIP -->
+    <section class="kpi-strip">
+        <div class="kpi-card">
+            <div class="kpi-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div><div class="kpi-label">Total Supplier</div><div class="kpi-value" id="kpi-totalSuppliers">—</div></div>
+            <div><div class="kpi-sub">Active suppliers FY 2025-26</div><div class="kpi-growth up" id="kpi-supplierGrowth">—</div></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div><div class="kpi-label">Top Supplier</div><div class="kpi-value" id="kpi-topSupplier" style="font-size:14px;line-height:1.3;">—</div></div>
+            <div><div class="kpi-sub">Total Spend for FY 2025-26</div><div class="kpi-growth up" id="kpi-topSupplierGrowth">—</div></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div><div class="kpi-label">Total Revenue</div><div class="kpi-value" id="kpi-totalRevenue">—</div></div>
+            <div><div class="kpi-sub">FY 2025-26 cumulative revenue</div><div class="kpi-growth up" id="kpi-revenueGrowth">—</div></div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div><div class="kpi-label">Total Completed Orders</div><div class="kpi-value" id="kpi-totalOrders">—</div></div>
+            <div><div class="kpi-sub">FY 2025-26 cumulative orders</div><div class="kpi-growth down" id="kpi-ordersGrowth">—</div></div>
+        </div>
+    </section>
+
+    <!-- TOP DIV -->
+    <section class="top-div">
+        <div class="card">
+            <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><span class="card-badge">5 Suppliers</span></div>
+            <div class="card-sub">Exploded view · FY 2025-26</div>
+            <div class="pie-body">
+                <div class="pie-legend" id="pieLegend"></div>
+                <div class="pie-chart-wrap"><canvas id="pieChart"></canvas></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><span class="card-badge">Spend Amount</span></div>
+            <div class="card-sub">Distribution by supplier · FY 2025-26</div>
+            <div class="bar-chart-wrap"><canvas id="barChart"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="card-title">Supplier by Order Count</div><span class="card-badge">Top 5</span></div>
+            <div class="rank-list" id="rankList"></div>
+        </div>
+    </section>
+
+    <!-- BOTTOM DIV -->
+    <section class="bottom-div">
+        <div class="card">
+            <div class="card-header"><div class="card-title">Items by Order Value</div><span class="card-badge" id="hbar-badge">10 Items</span></div>
+            <div class="card-sub">Ranked by total value · FY 2025-26</div>
+            <div class="hbar-chart-wrap"><canvas id="hbarChart"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="card-title">Supplier by Order Value</div><span class="card-badge">Top 5</span></div>
+            <div class="card-sub">Ranked by cumulative spend · FY 2025-26</div>
+            <div class="progress-list" id="supplierProgress"></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="card-title">Top 5 Items by Order Value</div><span class="card-badge">Top 5</span></div>
+            <div class="card-sub">Ranked by total value · FY 2025-26</div>
+            <div class="progress-list" id="itemProgress"></div>
+        </div>
+    </section>
+
+</main>
+
+<!-- JAVASCRIPT -->
+<script>
+    /* Close all dropdowns */
+    function closeAll() {
+        document.getElementById('notifDropdown').classList.remove('open');
+        document.getElementById('userDropdown').classList.remove('open');
+        document.getElementById('overlay').classList.remove('open');
+        document.getElementById('userChevron').style.transform = 'rotate(0deg)';
+    }
+
+    /* Bell toggle */
+    function toggleBell(e) {
+        e.stopPropagation();
+        const dd = document.getElementById('notifDropdown');
+        const isOpen = dd.classList.contains('open');
+        closeAll();
+        if (!isOpen) {
+            dd.classList.add('open');
+            document.getElementById('overlay').classList.add('open');
+        }
+    }
+
+    /* Notification helpers */
+    function markRead(item) {
+        item.classList.remove('unread');
+        const dot = item.querySelector('.notif-unread-dot');
+        if (dot) dot.remove();
+        updateBellCount();
+    }
+
+    function markAllRead() {
+        document.querySelectorAll('.notif-item.unread').forEach(item => {
+            item.classList.remove('unread');
+            const dot = item.querySelector('.notif-unread-dot');
+            if (dot) dot.remove();
+        });
+        updateBellCount();
+    }
+
+    function updateBellCount() {
+        const count   = document.querySelectorAll('.notif-item.unread').length;
+        const countEl = document.getElementById('notifCount');
+        const bellDot = document.getElementById('bellDot');
+        if (count === 0) {
+            if (countEl) countEl.textContent = 'All read';
+            if (bellDot) bellDot.style.display = 'none';
+        } else {
+            if (countEl) countEl.textContent = `${count} new`;
+            if (bellDot) bellDot.style.display = 'block';
+        }
+    }
+
+    /* User toggle */
+    function toggleUser(e) {
+        e.stopPropagation();
+        const dd = document.getElementById('userDropdown');
+        const isOpen = dd.classList.contains('open');
+        closeAll();
+        if (!isOpen) {
+            dd.classList.add('open');
+            document.getElementById('overlay').classList.add('open');
+            document.getElementById('userChevron').style.transform = 'rotate(180deg)';
+        }
+    }
+
+    /* Logout */
+    function handleLogout() {
+        sessionStorage.removeItem('aegle_session');
+        window.location.replace('/Account/Login');
+    }
+
+    /* Auto-load charts immediately on page open */
+    document.addEventListener('DOMContentLoaded', function () {
+        refreshDashboard();
+        setInterval(() => refreshDashboard(''), 30_000);
+    });
+</script>
+
+<script src="~/js/dashboard.js"></script>
+</body>
+</html>
