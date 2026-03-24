@@ -217,7 +217,7 @@ http://localhost:5000
 ## 👨‍💻 Author
 
 **Christopher Ambatti**
-Software Development Engineer — Dubai, UAE 🇦🇪
+**Software Developer** — Dubai, UAE 🇦🇪
 
 ---
 
