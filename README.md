@@ -204,13 +204,13 @@ http://localhost:5000
 - GitHub repository
 
 ### Version 2.0 🔮
+- [ ] Order Status Dashboard
+- [ ] Dashboard Dropdown
+- [ ] Supplier Performance Dashboard
 - [ ] Date range filter
 - [ ] Export to PDF and Excel
 - [ ] Multiple user accounts with role-based access
 - [ ] Live notifications from database
-- [ ] Trend line charts for monthly spend
-- [ ] Full CRUD — add, edit and delete orders
-- [ ] Docker support
 
 ---
 
