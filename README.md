@@ -213,7 +213,15 @@ http://localhost:5000
 - [ ] Live notifications from database
 
 ---
-
+### ✅ Must Have (Phase 1)
+- Overview (done)
+- Order Status
+- Supplier Performance
+---
+### (Phase 2) 
+- [ ] Spend Analytics
+- [ ] Pipeline
+---
 ## 👨‍💻 Author
 
 **Christopher Ambatti** —
