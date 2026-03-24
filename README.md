@@ -218,7 +218,7 @@ http://localhost:5000
 - Order Status
 - Supplier Performance
 ---
-### (Phase 2) 
+### 📍 (Phase 2) 
 - [ ] Spend Analytics
 - [ ] Pipeline
 ---
