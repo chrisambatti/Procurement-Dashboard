@@ -1,4 +1,4 @@
-# Aegle — Procurement Analytics Dashboard
+# Procurement Analytics Dashboard
 
 > A full-stack, enterprise-grade procurement analytics dashboard built for C-suite executives. Real-time data, interactive charts, secure login, and a fully responsive design across desktop, tablet and mobile.
 
