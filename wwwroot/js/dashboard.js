@@ -1,4 +1,7 @@
 
+
+
+
 'use strict';
 
 const PALETTE = ['#5B8FE8', '#7C6FD4', '#2CB5A0', '#F0A030', '#E85B6F'];
@@ -186,3 +189,4 @@ document.addEventListener('DOMContentLoaded', function () {
     refreshDashboard();
     setInterval(() => refreshDashboard(currentDept), 30_000);
 });
+
