@@ -84,6 +84,7 @@
         .header-sep    { width:1px; height:22px; background:rgba(255,255,255,0.3); margin:0 16px; flex-shrink:0; }
         .header-spacer { flex:1; }
         .header-right  { display:flex; align-items:center; flex-shrink:0; gap:4px; }
+        .logo          { width:280px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; flex-shrink:0;}
 
         /* ── DEPT BUTTON ──────────────────────────── */
         .dept-btn {
@@ -228,7 +229,7 @@
         .bar-chart-wrap        { height:240px; position:relative; }
         .hbar-chart-wrap       { height:280px; position:relative; }
 
-        /* ── RANK LIST ────────────────────────────── */
+        /* ── RANK LIST ─*/
         .rank-list { display:flex; flex-direction:column; gap:8px; }
         .rank-row  { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:7px; background:var(--rank-bg); opacity:0; transform:translateY(6px); animation:slideIn 0.35s ease forwards; transition:background 0.3s ease; }
         @@keyframes slideIn { to{opacity:1;transform:translateY(0);} }
@@ -247,7 +248,7 @@
         .rank-pill.p3 { background:#FEF0E6; color:#7C2D12; }
         .rank-pill.p4,.rank-pill.p5 { background:var(--prog-track); color:var(--muted); }
 
-        /* ── PROGRESS BARS ────────────────────────── */
+        /* ── PROGRESS BARS ─── */
         .progress-list    { display:flex; flex-direction:column; gap:10px; }
         .prog-row-header  { display:flex; align-items:center; justify-content:space-between; margin-bottom:4px; gap:6px; }
         .prog-dot         { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
@@ -257,13 +258,11 @@
         .prog-track  { width:100%; height:6px; border-radius:3px; background:var(--prog-track); overflow:hidden; transition:background 0.3s ease; }
         .prog-fill   { height:100%; border-radius:3px; width:0%; transition:width 1200ms cubic-bezier(.4,0,.2,1); }
 
-        /* ── OVERLAY ──────────────────────────────── */
+        /* ── OVERLAY ── */
         .overlay { display:none; position:fixed; inset:0; z-index:150; }
         .overlay.open { display:block; }
 
-        /* ═══════════════════════════════════════════
-           DESKTOP ≥ 1280px — no scroll, fit one screen
-        ═══════════════════════════════════════════ */
+        /*  DESKTOP ≥ 1280px — no scroll, fit one screen*/
         @@media (min-width: 1280px) {
             html, body { height:100%; overflow:hidden; }
             .page { height:calc(100vh - 48px); padding:8px 14px; gap:8px; overflow:hidden; }
@@ -290,10 +289,8 @@
             #rankList .rank-pill   { font-size:9.5px; padding:1px 6px; }
         }
 
-        /* ═══════════════════════════════════════════
-           LARGE TABLET / ZENBOOK FOLD 1024px–1279px
-           iPad Pro 1024px landscape
-        ═══════════════════════════════════════════ */
+        /* LARGE TABLET / ZENBOOK FOLD 1024px–1279px
+           iPad Pro 1024px landscape */
         @@media (min-width: 1024px) and (max-width: 1279px) {
             body { overflow-x:hidden; }
             .page { padding:10px 14px 20px; gap:10px; }
@@ -512,12 +509,7 @@
 <!-- HEADER -->
 <header class="header">
     <div class="header-logo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="3" width="20" height="18" rx="2"/>
-            <rect x="5"  y="14" width="3" height="5" fill="currentColor" stroke="none" opacity=".55"/>
-            <rect x="10" y="11" width="3" height="8" fill="currentColor" stroke="none" opacity=".75"/>
-            <rect x="15" y="7"  width="3" height="12" fill="currentColor" stroke="none"/>
-        </svg>
+       <img class="logo" src="~images/logo2.png" asp-append-version="true"/>
         <span class="logo-text">Aegle</span>
     </div>
 
@@ -630,6 +622,7 @@
 
 <!-- PAGE -->
 <main class="page">
+    <!--KPI STRIP-->
     <section class="kpi-strip">
         <div class="kpi-card">
             <div class="kpi-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
@@ -652,7 +645,7 @@
             <div><div class="kpi-sub">FY 2025-26 cumulative orders</div><div class="kpi-growth down" id="kpi-ordersGrowth">—</div></div>
         </div>
     </section>
-
+    //TOP DIV
     <section class="top-div">
         <div class="card">
             <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><span class="card-badge">5 Suppliers</span></div>
@@ -672,7 +665,7 @@
             <div class="rank-list" id="rankList"></div>
         </div>
     </section>
-
+    //BOTTOM DIV 
     <section class="bottom-div">
         <div class="card">
             <div class="card-header"><div class="card-title">Items by Order Value</div><span class="card-badge" id="hbar-badge">10 Items</span></div>
