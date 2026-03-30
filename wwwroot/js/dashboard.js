@@ -59,7 +59,7 @@ function initBarChart(data) {
         options: {
             responsive: true, maintainAspectRatio: false, animation: SLOW_ANIM,
             plugins: { legend: { display: false }, datalabels: { anchor: 'end', align: 'end', color: '#1E2A45', font: { family: 'DM Sans', size: 11, weight: '600' }, formatter: v => fmtM(v) }, tooltip: makeTooltip(data) },
-            scales: { x: { grid: { display: false }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#7B8FAD', maxRotation: 0 } }, y: { grid: { color: 'rgba(74,127,212,0.08)', lineWidth: 1 }, border: { dash: [4, 4] }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#7B8FAD', callback: v => fmtM(v) } } },
+            scales: { x: { grid: { display: false }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#7B8FAD', maxRotation: 0 } }, y: { grid: { color: 'rgba(74,127,212,0.08)', lineWidth: 1 }, border: { dash: [4, 4] }, ticks: { font: { family: 'DM Sans', size: 10 }, color: '#2D3A54', callback: v => fmtM(v) } } },
             layout: { padding: { top: 24 } }
         }
     });
