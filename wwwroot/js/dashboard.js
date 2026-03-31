@@ -139,7 +139,6 @@ function updateHorizontalBar(data) {
     hbarChart.options.animation = NO_ANIM;
     hbarChart.update();
 }
-
 function updateSupplierProgress(data) {
     const el = document.getElementById('supplierProgress');
     const max = data.length ? Math.max(...data.map(d => d.total)) : 1;

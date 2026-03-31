@@ -69,6 +69,7 @@
             font-size: 13px;
             min-height: 100%;
             transition: background 0.3s ease, color 0.3s ease;
+
         }
 
         /* ── HEADER ── */
@@ -573,7 +574,7 @@
             padding: 12px 16px 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            
         }
 
         /* ── KPI STRIP ── */
@@ -584,7 +585,7 @@
         }
 
         .kpi-card {
-            background: linear-gradient(135deg,#5B8FE8 0%,#4A7FD4 50%,#3A6BC4 100%);
+            background: #337ab7;
             border-radius: var(--radius);
             padding: 14px 16px 12px;
             color: #fff;
@@ -605,7 +606,8 @@
                 width: 90px;
                 height: 90px;
                 border-radius: 50%;
-                background: rgba(255,255,255,0.08);
+                background: rgba(255,255,255,0.06);
+                opacity: 0.8;
             }
 
             .kpi-card::after {
@@ -616,7 +618,7 @@
                 width: 80px;
                 height: 80px;
                 border-radius: 50%;
-                background: rgba(255,255,255,0.04);
+                /* background: rgba(255,255,255,0.04); */
             }
 
         .kpi-label {
@@ -1707,140 +1709,112 @@
 </head>
 <body>
 
-    <!-- SESSION GUARD - COMMENTED CAUSE IT'S ON HOLD FOR NOW-->
-    <!--<script>
-        (function () {
-            if (sessionStorage.getItem('aegle_session') !== 'true') {
-                window.location.replace('/Account/Login');
-                return;
-            }
-            history.pushState(null, '', window.location.href);
-            window.addEventListener('popstate', function () {
-                if (sessionStorage.getItem('aegle_session') !== 'true') {
-                    window.location.replace('/Account/Login');
-                } else {
-                    history.pushState(null, '', window.location.href);
-                }
-            });
-            const saved = localStorage.getItem('aegle_theme') || 'light';
-            document.documentElement.setAttribute('data-theme', saved);
-        })();
-    </script>
-    -->
     <!-- HEADER -->
-    <header class="header">
-        <div class="header-logo">
-            <img class="logo" src="~/images/logo.png" asp-append-version="true" />
-            <span class="logo-text">Aegle</span>
-        </div>
-
-        <div class="header-sep"></div>
-
-        <div class="dept-btn">
-            <div class="dept-btn-dot"></div>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2" /></svg>
-            <span class="dept-label">All Departments</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" /></svg>
-        </div>
-
-        <div class="header-spacer"></div>
-
-        <div class="header-right">
-
-            <!-- Theme Toggle -->
-            <label class="theme-toggle" title="Toggle dark mode">
-                <input type="checkbox" id="themeToggle" onchange="toggleTheme(this)" />
-                <div class="toggle-track"></div>
-                <div class="toggle-thumb">
-                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <circle cx="12" cy="12" r="4" />
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-                    </svg>
-                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                    </svg>
-                </div>
-            </label>
-
-            <div class="header-sep"></div>
-
-            <!-- Bell -->
-            <div class="bell-wrap">
-                <div class="header-bell" onclick="toggleBell(event)">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                    <span class="bell-dot" id="bellDot"></span>
-                </div>
-                <div class="notif-dropdown" id="notifDropdown">
-                    <div class="notif-header">
-                        <span class="notif-title">Notifications</span>
-                        <span class="notif-count" id="notifCount">3 new</span>
-                    </div>
-                    <div class="notif-item unread" onclick="markRead(this)">
-                        <div class="notif-icon-wrap blue"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V22H4V12" /><path d="M22 7H2v5h20V7z" /><path d="M12 22V7" /><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" /><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg></div>
-                        <div class="notif-body"><div class="notif-msg">New order from <strong>AL RAMA INT'L</strong> worth $3.2M</div><div class="notif-time">2 minutes ago</div></div>
-                        <div class="notif-unread-dot"></div>
-                    </div>
-                    <div class="notif-item unread" onclick="markRead(this)">
-                        <div class="notif-icon-wrap green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12" /></svg></div>
-                        <div class="notif-body"><div class="notif-msg"><strong>Arabian Automobiles</strong> order completed successfully</div><div class="notif-time">1 hour ago</div></div>
-                        <div class="notif-unread-dot"></div>
-                    </div>
-                    <div class="notif-item unread" onclick="markRead(this)">
-                        <div class="notif-icon-wrap orange"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg></div>
-                        <div class="notif-body"><div class="notif-msg"><strong>Al Shafar</strong> order pending approval since 3 days</div><div class="notif-time">3 days ago</div></div>
-                        <div class="notif-unread-dot"></div>
-                    </div>
-                    <div class="notif-item" onclick="markRead(this)">
-                        <div class="notif-icon-wrap purple"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg></div>
-                        <div class="notif-body"><div class="notif-msg">Q2 procurement report is ready to download</div><div class="notif-time">Yesterday</div></div>
-                    </div>
-                    <div class="notif-item" onclick="markRead(this)">
-                        <div class="notif-icon-wrap red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg></div>
-                        <div class="notif-body"><div class="notif-msg"><strong>Al Manhal</strong> order was cancelled</div><div class="notif-time">2 days ago</div></div>
-                    </div>
-                    <div class="notif-footer" onclick="markAllRead()">Mark all as read</div>
-                </div>
+    @* <header class="header">
+            <div class="header-logo">
+                <img class="logo" src="~/images/logo.png" asp-append-version="true" />
+                <span class="logo-text">Aegle</span>
             </div>
 
             <div class="header-sep"></div>
 
-            <!-- User -->
-            <div class="user-wrap">
-                <div class="header-user" onclick="toggleUser(event)">
-                    <div class="user-avatar">AL</div>
-                    <span class="user-name">ANDROULLA LEONIDOU</span>
-                    <svg id="userChevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform .2s"><path d="M6 9l6 6 6-6" /></svg>
+            <div class="dept-btn">
+                <div class="dept-btn-dot"></div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2" /></svg>
+                <span class="dept-label">All Departments</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6" /></svg>
+            </div>
+
+            <div class="header-spacer"></div>
+
+            <div class="header-right">
+
+                <!-- Theme Toggle -->
+                <label class="theme-toggle" title="Toggle dark mode">
+                    <input type="checkbox" id="themeToggle" onchange="toggleTheme(this)" />
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb">
+                        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                        </svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </div>
+                </label>
+
+                <div class="header-sep"></div>
+
+                <!-- Bell -->
+                <div class="bell-wrap">
+                    <div class="header-bell" onclick="toggleBell(event)">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        </svg>
+                        <span class="bell-dot" id="bellDot"></span>
+                    </div>
+                    <div class="notif-dropdown" id="notifDropdown">
+                        <div class="notif-header">
+                            <span class="notif-title">Notifications</span>
+                            <span class="notif-count" id="notifCount">3 new</span>
+                        </div>
+                        <div class="notif-item unread" onclick="markRead(this)">
+                            <div class="notif-icon-wrap blue"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V22H4V12" /><path d="M22 7H2v5h20V7z" /><path d="M12 22V7" /><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" /><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg></div>
+                            <div class="notif-body"><div class="notif-msg">New order from <strong>AL RAMA INT'L</strong> worth $3.2M</div><div class="notif-time">2 minutes ago</div></div>
+                            <div class="notif-unread-dot"></div>
+                        </div>
+                        <div class="notif-item unread" onclick="markRead(this)">
+                            <div class="notif-icon-wrap green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12" /></svg></div>
+                            <div class="notif-body"><div class="notif-msg"><strong>Arabian Automobiles</strong> order completed successfully</div><div class="notif-time">1 hour ago</div></div>
+                            <div class="notif-unread-dot"></div>
+                        </div>
+                        <div class="notif-item unread" onclick="markRead(this)">
+                            <div class="notif-icon-wrap orange"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg></div>
+                            <div class="notif-body"><div class="notif-msg"><strong>Al Shafar</strong> order pending approval since 3 days</div><div class="notif-time">3 days ago</div></div>
+                            <div class="notif-unread-dot"></div>
+                        </div>
+                        <div class="notif-item" onclick="markRead(this)">
+                            <div class="notif-icon-wrap purple"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg></div>
+                            <div class="notif-body"><div class="notif-msg">Q2 procurement report is ready to download</div><div class="notif-time">Yesterday</div></div>
+                        </div>
+                        <div class="notif-item" onclick="markRead(this)">
+                            <div class="notif-icon-wrap red"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg></div>
+                            <div class="notif-body"><div class="notif-msg"><strong>Al Manhal</strong> order was cancelled</div><div class="notif-time">2 days ago</div></div>
+                        </div>
+                        <div class="notif-footer" onclick="markAllRead()">Mark all as read</div>
+                    </div>
                 </div>
-                <div class="user-dropdown" id="userDropdown">
-                    <div class="dropdown-header">
-                        <div class="dropdown-avatar">AL</div>
-                        <div>
-                            <div class="dropdown-name">Androulla Leonidou</div>
-                            <div class="dropdown-role">Group Chief Procurement Officer</div>
+
+                <div class="header-sep"></div>
+
+                <!-- User -->
+                <div class="user-wrap">
+                    <div class="header-user" onclick="toggleUser(event)">
+                        <div class="user-avatar">AL</div>
+                        <span class="user-name">ANDROULLA LEONIDOU</span>
+                        <svg id="userChevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition:transform .2s"><path d="M6 9l6 6 6-6" /></svg>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar">AL</div>
+                            <div>
+                                <div class="dropdown-name">Androulla Leonidou</div>
+                                <div class="dropdown-role">Group Chief Procurement Officer</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item" onclick="closeAll()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>View Profile
+                        </div>
+                        <div class="dropdown-item" onclick="closeAll()">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>Account Settings
                         </div>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item" onclick="closeAll()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>View Profile
-                    </div>
-                    <div class="dropdown-item" onclick="closeAll()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>Account Settings
-                    </div>
-
-                    <!--LOGOUT TOGGLE - COMMENTED CAUSE IT'S ON HOLD FOR NOW-->
-                    <!-- <div class="dropdown-divider"></div>
-                    <div class="dropdown-item logout" onclick="handleLogout()">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout
-                    </div>-->
-
                 </div>
             </div>
-
-        </div>
-    </header>
+        </header> *@
 
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
@@ -1989,11 +1963,6 @@
                 document.getElementById('userChevron').style.transform = 'rotate(180deg)';
             }
         }
-
-        // function handleLogout() {
-        //     sessionStorage.removeItem('aegle_session');
-        //     window.location.replace('/Account/Login');
-        // }
 
         document.addEventListener('DOMContentLoaded', function () {
             refreshDashboard();
