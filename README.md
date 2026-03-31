@@ -187,9 +187,9 @@ http://localhost:5000
 
 | Screen | Layout |
 |---|---|
-| Desktop ≥ 1024px | Full single-screen, no scroll, 3-column charts |
-| Tablet 768px–1023px | 2-column charts, scrollable |
-| Mobile ≤ 767px | Single column, stacked charts, compact header |
+| Desktop  | Full single-screen, no scroll, 3-column charts |
+| Tablet  | 2-column charts, scrollable |
+| Mobile  | Single column, stacked charts, compact header |
 
 ---
 
