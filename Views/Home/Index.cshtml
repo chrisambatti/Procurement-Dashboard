@@ -152,7 +152,7 @@
             height: 32px;
             flex-shrink: 0;
         }
-
+        
         .dept-btn-dot {
             width: 7px;
             height: 7px;
@@ -174,11 +174,11 @@
             cursor: pointer;
         }
 
-            .theme-toggle input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-                position: absolute;
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
             }
 
         .toggle-track {
@@ -256,13 +256,13 @@
             transition: background .15s;
         }
 
-            .header-bell:hover {
-                background: rgba(255,255,255,0.12);
-            }
+        .header-bell:hover {
+            background: rgba(255,255,255,0.12);
+        }
 
-            .header-bell svg {
-                color: rgba(255,255,255,0.9);
-            }
+        .header-bell svg {
+            color: rgba(255,255,255,0.9);
+        }
 
         .bell-dot {
             position: absolute;
@@ -291,9 +291,9 @@
             animation: dropIn 0.18s ease;
         }
 
-            .notif-dropdown.open {
-                display: block;
-            }
+        .notif-dropdown.open {
+            display: block;
+        }
 
         .notif-header {
             display: flex;
@@ -328,21 +328,21 @@
             border-bottom: 1px solid var(--border);
         }
 
-            .notif-item:last-child {
-                border-bottom: none;
-            }
+        .notif-item:last-child {
+            border-bottom: none;
+        }
 
-            .notif-item:hover {
-                background: var(--dd-hover);
-            }
+        .notif-item:hover {
+            background: var(--dd-hover);
+        }
 
-            .notif-item.unread {
-                background: var(--notif-unread);
-            }
+        .notif-item.unread {
+            background: var(--notif-unread);
+        }
 
-                .notif-item.unread:hover {
-                    background: var(--notif-hover);
-                }
+        .notif-item.unread:hover {
+            background: var(--notif-hover);
+        }
 
         .notif-icon-wrap {
             width: 32px;
@@ -354,30 +354,30 @@
             flex-shrink: 0;
         }
 
-            .notif-icon-wrap.blue {
-                background: #EEF4FF;
-                color: #5B8FE8;
-            }
+        .notif-icon-wrap.blue {
+            background: #EEF4FF;
+            color: #5B8FE8;
+        }
 
-            .notif-icon-wrap.green {
-                background: #ECFDF5;
-                color: #2CB5A0;
-            }
+        .notif-icon-wrap.green {
+            background: #ECFDF5;
+            color: #2CB5A0;
+        }
 
-            .notif-icon-wrap.orange {
-                background: #FFFBEB;
-                color: #F0A030;
-            }
+        .notif-icon-wrap.orange {
+            background: #FFFBEB;
+            color: #F0A030;
+        }
 
-            .notif-icon-wrap.purple {
-                background: #F5F3FF;
-                color: #7C6FD4;
-            }
+        .notif-icon-wrap.purple {
+            background: #F5F3FF;
+            color: #7C6FD4;
+        }
 
-            .notif-icon-wrap.red {
-                background: #FEF2F2;
-                color: #E85B6F;
-            }
+        .notif-icon-wrap.red {
+            background: #FEF2F2;
+            color: #E85B6F;
+        }
 
         .notif-body {
             flex: 1;
@@ -390,10 +390,10 @@
             line-height: 1.45;
         }
 
-            .notif-msg strong {
-                color: var(--text);
-                font-weight: 600;
-            }
+        .notif-msg strong {
+            color: var(--text);
+            font-weight: 600;
+        }
 
         .notif-time {
             font-size: 10.5px;
@@ -421,9 +421,9 @@
             border-top: 1px solid var(--border);
         }
 
-            .notif-footer:hover {
-                background: var(--dd-hover);
-            }
+        .notif-footer:hover {
+            background: var(--dd-hover);
+        }
 
         /* ── USER ── */
         .user-wrap {
@@ -444,9 +444,9 @@
             user-select: none;
         }
 
-            .header-user:hover {
-                background: rgba(255,255,255,0.12);
-            }
+        .header-user:hover {
+            background: rgba(255,255,255,0.12);
+        }
 
         .user-name {
             display: inline;
@@ -482,21 +482,21 @@
             animation: dropIn 0.18s ease;
         }
 
-            .user-dropdown.open {
-                display: block;
-            }
+        .user-dropdown.open {
+            display: block;
+        }
 
         @@keyframes dropIn {
-            from {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
         }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+       }
 
         .dropdown-header {
             padding: 16px;
@@ -603,28 +603,28 @@
             min-height: 110px;
         }
 
-            .kpi-card::before {
-                content: '';
-                position: absolute;
-                top: -20px;
-                right: -20px;
-                width: 90px;
-                height: 90px;
-                border-radius: 50%;
-                background: rgba(255,255,255,0.06);
-                opacity: 0.8;
-            }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            opacity: 0.8;
+        }
 
-            .kpi-card::after {
-                content: '';
-                position: absolute;
-                bottom: -30px;
-                left: -10px;
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
                 /* background: rgba(255,255,255,0.04); */
-            }
+        }
 
         .kpi-label {
             font-size: 9.5px;
@@ -665,13 +665,13 @@
             margin-top: 6px;
         }
 
-            .kpi-growth.up {
-                color: #A7F3D0;
-            }
+        .kpi-growth.up {
+            color: #A7F3D0;
+        }
 
-            .kpi-growth.down {
-                color: #FECACA;
-            }
+        .kpi-growth.down {
+            color: #FECACA;
+        }
 
         /* ── CARD ──*/
         .card {
@@ -800,9 +800,9 @@
             justify-content: center;
         }
 
-            .pie-chart-wrap canvas {
-                max-height: 180px;
-            }
+        .pie-chart-wrap canvas {
+            max-height: 180px;
+        }
 
         .bar-chart-wrap {
             height: 240px;
@@ -852,24 +852,24 @@
             flex-shrink: 0;
         }
 
-            .rank-badge.gold {
-                background: #FEF3C7;
-            }
+        .rank-badge.gold {
+            background: #FEF3C7;
+        }
 
-            .rank-badge.silver {
-                background: #F1F5F9;
-            }
+        .rank-badge.silver {
+            background: #F1F5F9;
+        }
 
-            .rank-badge.bronze {
-                background: #FEF0E6;
-            }
+        .rank-badge.bronze {
+            background: #FEF0E6;
+        }
 
-            .rank-badge.plain {
-                background: var(--prog-track);
-                font-weight: 700;
-                font-size: 12px;
-                color: var(--blue);
-            }
+        .rank-badge.plain {
+            background: var(--prog-track);
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--blue);
+        }
 
         .rank-avatar {
             width: 30px;
@@ -913,22 +913,22 @@
             flex-shrink: 0;
         }
 
-            .rank-pill.p1 {
-                background: #FEF3C7;
-                color: #92400E;
-            }
+        .rank-pill.p1 {
+            background: #FEF3C7;
+            color: #92400E;
+        }
 
-            .rank-pill.p2 {
-                background: #F1F5F9;
-                color: #374151;
-            }
+        .rank-pill.p2 {
+            background: #F1F5F9;
+            color: #374151;
+        }
 
-            .rank-pill.p3 {
-                background: #FEF0E6;
-                color: #7C2D12;
-            }
+        .rank-pill.p3 {
+            background: #FEF0E6;
+            color: #7C2D12;
+        }
 
-            .rank-pill.p4, .rank-pill.p5 {
+        .rank-pill.p4, .rank-pill.p5 {
                 background: var(--prog-track);
                 color: var(--muted);
             }
@@ -1919,7 +1919,7 @@
 
         <section class="bottom-div">
             <div class="card">
-                <div class="card-header"><div class="card-title">Items by Order Value</div><span class="card-badge" id="hbar-badge">View all</span></div>
+                <div class="card-header"><div class="card-title">Items by Order Value</div><button class="card-badge view-btn" data-type="items" id="hbar-badge"></button></div>
                 <div class="card-sub">Ranked by total value · FY 2025-26</div>
                 <div class="hbar-chart-wrap"><canvas id="hbarChart"></canvas></div>
             </div>
