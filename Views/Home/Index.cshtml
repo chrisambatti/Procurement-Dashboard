@@ -1719,6 +1719,7 @@
             align-items: center;
             text-align:center;
             justify-content: center;
+
         }
 
             .table-modal.open {
@@ -2167,7 +2168,7 @@
                 data.forEach(d => {
                     body.innerHTML += `
                         <tr>
-                            <td>${d.srno}</td>
+                           
                             <td>${d.itemcode}</td>
                             <td>${d.itemname}</td>
                             <td>${d.orders}</td>
@@ -2237,7 +2238,6 @@
                 sorted.forEach(d => {
                     body.innerHTML += `
             <tr>
-                <td>${d.srno}</td>
                 <td>${d.suppliercode}</td>
                 <td>${d.supplier}</td>
                 <td>${Number(d.value).toLocaleString()}</td>
