@@ -705,6 +705,7 @@
             padding: 2px 8px;
             border-radius: 20px;
             white-space: nowrap;
+            cursor:pointer;
         }
 
         .card-sub {
@@ -1708,6 +1709,56 @@
             text-decoration: none;
             font-weight: 500;
         }
+
+        .table-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1000;
+            align-items: center;
+            text-align:center;
+            justify-content: center;
+        }
+
+            .table-modal.open {
+                display: flex;
+            }
+
+        .table-modal-content {
+            width: 80%;
+            max-width: 900px;
+            max-height: 80vh;
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table-modal-header {
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            font-weight:700;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            height:20px;
+            width:20px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+
+        .data-table th,
+        .data-table td {
+           padding: 10px;
+           border-bottom: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
@@ -1848,7 +1899,7 @@
 
         <section class="top-div">
             <div class="card">
-                <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><span class="card-badge">5 Suppliers</span></div>
+                <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><button class="card-badge view-btn" data-type="pie">View all</button></div>
                 <div class="card-sub">Exploded view · FY 2025-26</div>
                 <div class="pie-body">
                     <div class="pie-legend" id="pieLegend"></div>
@@ -1856,29 +1907,29 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><span class="card-badge">Spend Amount</span></div>
+                <div class="card-header"><div class="card-title">Top 5 Supplier Spend</div><button class="card-badge view-btn" data-type="bar">View all</button></div>
                 <div class="card-sub">Distribution by supplier · FY 2025-26</div>
                 <div class="bar-chart-wrap"><canvas id="barChart"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><div class="card-title">Supplier by Order Count</div><span class="card-badge">Top 5</span></div>
+                <div class="card-header"><div class="card-title">Supplier by Order Count</div><button class="card-badge view-btn" data-type="rank">View all</button></div>
                 <div class="rank-list" id="rankList"></div>
             </div>
         </section>
 
         <section class="bottom-div">
             <div class="card">
-                <div class="card-header"><div class="card-title">Items by Order Value</div><span class="card-badge" id="hbar-badge">10 Items</span></div>
+                <div class="card-header"><div class="card-title">Items by Order Value</div><span class="card-badge" id="hbar-badge">View all</span></div>
                 <div class="card-sub">Ranked by total value · FY 2025-26</div>
                 <div class="hbar-chart-wrap"><canvas id="hbarChart"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><div class="card-title">Supplier by Order Value</div><span class="card-badge">Top 5</span></div>
+                <div class="card-header"><div class="card-title">Supplier by Order Value</div><button class="card-badge" id="hbar-badge">View all</button></div>
                 <div class="card-sub">Ranked by cumulative spend · FY 2025-26</div>
                 <div class="progress-list" id="supplierProgress"></div>
             </div>
             <div class="card">
-                <div class="card-header"><div class="card-title">Top 5 Items by Order Value</div><span class="card-badge">Top 5</span></div>
+                <div class="card-header"><div class="card-title">Top 5 Items by Order Value</div><button class="card-badge" id="hbar-badge">View all</button></div>
                 <div class="card-sub">Ranked by total value · FY 2025-26</div>
                 <div class="progress-list" id="itemProgress"></div>
             </div>
@@ -1974,5 +2025,149 @@
     </script>
 
     <script src="~/js/dashboard.js"></script>
+
+
+
+
+
+    @*TESTING*@
+
+    <script>
+        // SAMPLE DATA (replace later with real data & Later push to Mysql)
+        const fullData = {
+            pie: [
+                { suppliercode:"3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
+                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
+                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
+                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
+                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
+                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
+                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
+                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
+                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
+                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
+                { suppliercode: "3200003 ", supplier: "ADIL & SADIQ SEAT MNFG. ", spend: 4000 },
+                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 },
+
+            ],
+            bar: [
+                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
+                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
+                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
+                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
+                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
+                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
+                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
+                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
+                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
+                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
+                { suppliercode: "3200003 ", supplier: "ADIL & SADIQ SEAT MNFG. ", spend: 4000 },
+                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 },
+            ],
+            rank: [
+                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", orders: 7 },
+                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", orders:2},
+                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", orders: 2 },
+                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", orders: 1},
+                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", orders: 1 },
+                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", orders: 1},
+                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", orders: 1},
+                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", orders: 1},
+                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", orders: 1 },
+                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", orders: 1},
+                { suppliercode: "3200003 ", supplier: "ADIL & SADIQ SEAT MNFG. ", orders: 1},
+                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", orders: 1},
+
+            ]
+        };
+
+        // BUTTON CLICK HANDLER
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".view-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const type = this.getAttribute("data-type");
+                    openTable(type);
+                });
+            });
+        });
+
+        // OPEN TABLE
+        function openTable(type) {
+            const modal = document.getElementById("tableModal");
+            const head = document.getElementById("tableHead");
+            const body = document.getElementById("tableBody");
+            const title = document.getElementById("modalTitle");
+
+            modal.classList.add("open");
+
+            let data = fullData[type];
+
+            // 🚨 DEBUG (optional but useful)
+            console.log("TYPE:", type);
+            console.log("DATA:", data);
+
+            head.innerHTML = "";
+            body.innerHTML = "";
+
+            if (!data || data.length === 0) {
+                body.innerHTML = `<tr><td colspan="2">No data available</td></tr>`;
+                return;
+            }
+
+            if (type === "rank") {
+                title.innerText = "All Suppliers by Order Count";
+                head.innerHTML = `<tr><th>Supplier Code<th>Supplier</th><th>Orders</th></tr>`;
+
+                data.forEach(d => {
+                    body.innerHTML += `
+                <tr>
+                    <td>${d.suppliercode}</td>
+                    <td>${d.supplier}</td>
+                    <td>${d.orders}</td>
+                </tr>`;
+                });
+
+            } else {
+                title.innerText = "All Supplier Spend";
+                head.innerHTML = `<tr><th>Supplier Code<th>Supplier</th><th>Spend (AED)</th></tr>`;
+
+                data.forEach(d => {
+                    body.innerHTML += `
+                <tr>
+                    <td>${d.suppliercode}</td>
+                    <td>${d.supplier}</td>
+                    <td>${d.spend.toLocaleString()}</td>
+                </tr>`;
+                });
+            }
+        }
+
+        // CLOSE MODAL
+        function closeTableModal() {
+            document.getElementById("tableModal").classList.remove("open");
+        }
+    </script>
+
+
+
+
+
+
+
+    <div class="table-modal" id="tableModal">
+        <div class="table-modal-content">
+            <div class="table-modal-header">
+                <div id="modalTitle">All Data</div>
+                <span class="close-btn" onclick="closeTableModal()">×</span>
+            </div>
+
+            <div class="table-modal-body">
+                <table class="data-table">
+                    <thead id="tableHead"></thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

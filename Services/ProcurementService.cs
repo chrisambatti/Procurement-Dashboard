@@ -145,7 +145,6 @@ namespace Aegle.Services
     return ranked;
 }
 
-
         public async Task<IEnumerable<ItemValueDto>> GetItemsByOrderValueAsync(string? department)
         {
             using var conn = CreateConnection();
