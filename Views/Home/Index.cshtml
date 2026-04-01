@@ -2081,38 +2081,38 @@
             ],
 
             order: [
-                { suppliercode: "3200024", supplier: "WADI RAWDA CRUSHERS", value: 1 },
-                { suppliercode: "3200019", supplier: "AL SHAFAR TRANSP&CONTG.", value: 1 },
-                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", value: 1 },
-                { suppliercode: "3200021", supplier: "AL SHIRAWI TRADING CO.(L.L.C.)", value: 1 },
-                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", value: 1 },
-                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTERS LLC", value: 2 },
-                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", value: 8 },
-                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", value: 1 },
-                { suppliercode: "3200040", supplier: "FAST WHEEL HEAVY TRUCKS", value: 1 },
-                { suppliercode: "3200013", supplier: "AL GURG BUILD SER(P) LTD.", value: 1 },
-                { suppliercode: "3200051", supplier: "AL NASR TECHNICAL TRADING", value: 1 },
-                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO.(L.L.C.)", value: 1 },
-                { suppliercode: "3200032", supplier: "ARESCO TRADING EST.", value: 1 },
-                { suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG. COMPANY", value: 1 },
-                { suppliercode: "3200153", supplier: "EMIRATES SPECIALITIES CO.", value: 1 },
-                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", value: 2 },
-                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", value: 1 },
+                { srno: "1", suppliercode: "3200024", supplier: "WADI RAWDA CRUSHERS", value: 1 },
+                { srno: "2", suppliercode: "3200019", supplier: "AL SHAFAR TRANSP&CONTG.", value: 1 },
+                { srno: "3", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", value: 1 },
+                { srno: "4", suppliercode: "3200021", supplier: "AL SHIRAWI TRADING CO.(L.L.C.)", value: 1 },
+                { srno: "5", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", value: 1 },
+                { srno: "6", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTERS LLC", value: 2 },
+                { srno: "7", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", value: 8 },
+                { srno: "8", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", value: 1 },
+                { srno: "9", suppliercode: "3200040", supplier: "FAST WHEEL HEAVY TRUCKS", value: 1 },
+                { srno: "10", suppliercode: "3200013", supplier: "AL GURG BUILD SER(P) LTD.", value: 1 },
+                { srno: "11", suppliercode: "3200051", supplier: "AL NASR TECHNICAL TRADING", value: 1 },
+                { srno: "12", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO.(L.L.C.)", value: 1 },
+                { srno: "13", suppliercode: "3200032", supplier: "ARESCO TRADING EST.", value: 1 },
+                { srno: "14", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG. COMPANY", value: 1 },
+                { srno: "15", suppliercode: "3200153", supplier: "EMIRATES SPECIALITIES CO.", value: 1 },
+                { srno: "16", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", value: 2 },
+                { srno: "17", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", value: 1 },
 
 
             ],
 
 
             items: [
-                { itemcode: "A1-021-035", itemname: "20MM CRUSHED AGGREGATE", orders: 1 },
-                { itemcode: "A1-011-021", itemname: "40-20MM CRUSHED AGGREGATE", orders: 4 },
-                { itemcode: "B7-213-001", itemname: "8MM DIA REINF D/STEEL BAR", orders: 1 },
-                { itemcode: "A1-421-043", itemname: "600-800MM FLAT BOULDER CRAZY", orders: 1 },
-                { itemcode: "A1-012-003", itemname: "30-20 MM CRUSHED AGGREGATE", orders: 3 },
-                { itemcode: "A1-011-050", itemname: "10-5MM CRUSHED AGGREGATE", orders: 1 },
-                { itemcode: "A1-011-040", itemname: "25-75MM CRUSHED STONE DELIVER", orders: 1 },
-                { itemcode: "A1-012-053", itemname: "50-100MM CRUSHED LANDSCAPE AGG", orders: 1 },
-                { itemcode: "A1-421-042", itemname: "400-600MM FLAT BOULDER CRAZY", orders: 1 }
+                { srno: "1", itemcode: "A1-021-035", itemname: "20MM CRUSHED AGGREGATE", orders: 1 },
+                { srno: "2", itemcode: "A1-011-021", itemname: "40-20MM CRUSHED AGGREGATE", orders: 4 },
+                { srno: "3", itemcode: "B7-213-001", itemname: "8MM DIA REINF D/STEEL BAR", orders: 1 },
+                { srno: "4", itemcode: "A1-421-043", itemname: "600-800MM FLAT BOULDER CRAZY", orders: 1 },
+                { srno: "5", itemcode: "A1-012-003", itemname: "30-20 MM CRUSHED AGGREGATE", orders: 3 },
+                { srno: "6", itemcode: "A1-011-050", itemname: "10-5MM CRUSHED AGGREGATE", orders: 1 },
+                { srno: "7", itemcode: "A1-011-040", itemname: "25-75MM CRUSHED STONE DELIVER", orders: 1 },
+                { srno: "8", itemcode: "A1-012-053", itemname: "50-100MM CRUSHED LANDSCAPE AGG", orders: 1 },
+                { srno: "9", itemcode: "A1-421-042", itemname: "400-600MM FLAT BOULDER CRAZY", orders: 1 }
 
 
 
@@ -2167,6 +2167,7 @@
                 data.forEach(d => {
                     body.innerHTML += `
                         <tr>
+                            <td>${d.srno}</td>
                             <td>${d.itemcode}</td>
                             <td>${d.itemname}</td>
                             <td>${d.orders}</td>
@@ -2236,6 +2237,7 @@
                 sorted.forEach(d => {
                     body.innerHTML += `
             <tr>
+                <td>${d.srno}</td>
                 <td>${d.suppliercode}</td>
                 <td>${d.supplier}</td>
                 <td>${Number(d.value).toLocaleString()}</td>
