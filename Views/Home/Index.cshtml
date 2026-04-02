@@ -683,7 +683,7 @@
             flex-direction: column;
             transition: background 0.3s ease;
         }
-
+     
         .card-header {
             display: flex;
             align-items: flex-start;
@@ -1722,9 +1722,9 @@
 
         }
 
-            .table-modal.open {
-                display: flex;
-            }
+        .table-modal.open {
+            display: flex;
+        }
 
         .table-modal-content {
             width: 80%;
@@ -1920,7 +1920,7 @@
 
         <section class="bottom-div">
             <div class="card">
-                <div class="card-header"><div class="card-title">Items by Order Value</div><button class="card-badge view-btn" data-type="items" id="hbar-badge"></button></div>
+                <div class="card-header"><div class="card-title">Items by Order Value</div><button class="card-badge view-btn" data-type="items" >View all</button></div>
                 <div class="card-sub">Ranked by total value · FY 2025-26</div>
                 <div class="hbar-chart-wrap"><canvas id="hbarChart"></canvas></div>
             </div>
@@ -2033,249 +2033,251 @@
 
     @*TESTING*@
 
-    <script>
-        // SAMPLE DATA
-        const fullData = {
-            pie: [
-                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
-                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
-                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
-                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
-                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
-                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
-                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
-                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
-                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
-                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
-                { suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", spend: 4000 },
-                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 }
-            ],
+<script>
+    // SAMPLE DATA
+    const fullData = {
+        pie: [
+            { srno: "1", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
+            { srno: "2", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
+            { srno: "3", suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
+            { srno: "4", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
+            { srno: "5", suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
+            { srno: "6", suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
+            { srno: "7", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
+            { srno: "8", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
+            { srno: "9", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
+            { srno: "10", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
+            { srno: "11", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", spend: 4000 },
+            { srno: "12", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 }
+        ],
 
-            bar: [
-                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
-                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
-                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
-                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
-                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
-                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
-                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
-                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
-                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
-                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
-                { suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", spend: 4000 },
-                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 }
-            ],
+        bar: [
+            { srno: "1", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", spend: 122083 },
+            { srno: "2", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", spend: 150625 },
+            { srno: "3", suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", spend: 150001 },
+            { srno: "4", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", spend: 350 },
+            { srno: "5", suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", spend: 170000000 },
+            { srno: "6", suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", spend: 18750025 },
+            { srno: "7", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", spend: 1500000 },
+            { srno: "8", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", spend: 230470 },
+            { srno: "9", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", spend: 1040000 },
+            { srno: "10", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", spend: 200000 },
+            { srno: "11", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", spend: 4000 },
+            { srno: "12", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", spend: 2980 }
+        ],
 
-            rank: [
-                { suppliercode: "3200001", supplier: "AFIF SARIUDDIN", orders: 7 },
-                { suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", orders: 2 },
-                { suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", orders: 2 },
-                { suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", orders: 1 },
-                { suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", orders: 1 },
-                { suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", orders: 1 },
-                { suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", orders: 1 },
-                { suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", orders: 1 },
-                { suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", orders: 1 },
-                { suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", orders: 1 },
-                { suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", orders: 1 },
-                { suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", orders: 1 }
-            ],
+        rank: [
+            { srno: "1", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", orders: 7 },
+            { srno: "2", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTER LLC", orders: 2 },
+            { srno: "3", suppliercode: "3200013", supplier: "AL GURG BUID.SER.(P)LTD", orders: 2 },
+            { srno: "4", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", orders: 1 },
+            { srno: "5", suppliercode: "3200024", supplier: "WADI AL RAWDA CHRUSHERS", orders: 1 },
+            { srno: "6", suppliercode: "3200019", supplier: "AL SHARAF TRANSP.&CONTG", orders: 1 },
+            { srno: "7", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", orders: 1 },
+            { srno: "8", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", orders: 1 },
+            { srno: "9", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", orders: 1 },
+            { srno: "10", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO L.L.C.", orders: 1 },
+            { srno: "11", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG.", orders: 1 },
+            { srno: "12", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", orders: 1 }
+        ],
 
-            order: [
-                { srno: "1", suppliercode: "3200024", supplier: "WADI RAWDA CRUSHERS", value: 1 },
-                { srno: "2", suppliercode: "3200019", supplier: "AL SHAFAR TRANSP&CONTG.", value: 1 },
-                { srno: "3", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", value: 1 },
-                { srno: "4", suppliercode: "3200021", supplier: "AL SHIRAWI TRADING CO.(L.L.C.)", value: 1 },
-                { srno: "5", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", value: 1 },
-                { srno: "6", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTERS LLC", value: 2 },
-                { srno: "7", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", value: 8 },
-                { srno: "8", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", value: 1 },
-                { srno: "9", suppliercode: "3200040", supplier: "FAST WHEEL HEAVY TRUCKS", value: 1 },
-                { srno: "10", suppliercode: "3200013", supplier: "AL GURG BUILD SER(P) LTD.", value: 1 },
-                { srno: "11", suppliercode: "3200051", supplier: "AL NASR TECHNICAL TRADING", value: 1 },
-                { srno: "12", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO.(L.L.C.)", value: 1 },
-                { srno: "13", suppliercode: "3200032", supplier: "ARESCO TRADING EST.", value: 1 },
-                { srno: "14", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG. COMPANY", value: 1 },
-                { srno: "15", suppliercode: "3200153", supplier: "EMIRATES SPECIALITIES CO.", value: 1 },
-                { srno: "16", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", value: 2 },
-                { srno: "17", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", value: 1 },
-
-
-            ],
+        order: [
+            { srno: "1", suppliercode: "3200024", supplier: "WADI RAWDA CRUSHERS", value: 1 },
+            { srno: "2", suppliercode: "3200019", supplier: "AL SHAFAR TRANSP&CONTG.", value: 1 },
+            { srno: "3", suppliercode: "3200122", supplier: "CICION BUILDING MATERIAL", value: 1 },
+            { srno: "4", suppliercode: "3200021", supplier: "AL SHIRAWI TRADING CO.(L.L.C.)", value: 1 },
+            { srno: "5", suppliercode: "3205166", supplier: "SFL CANUSA MIDDLE EAST PIPELINE", value: 1 },
+            { srno: "6", suppliercode: "3200006", supplier: "AL FUTTAIM AUTO CENTERS LLC", value: 2 },
+            { srno: "7", suppliercode: "3200001", supplier: "AFIF SARIUDDIN", value: 8 },
+            { srno: "8", suppliercode: "3200004", supplier: "AL ABBAS TRADING CO.", value: 1 },
+            { srno: "9", suppliercode: "3200040", supplier: "FAST WHEEL HEAVY TRUCKS", value: 1 },
+            { srno: "10", suppliercode: "3200013", supplier: "AL GURG BUILD SER(P) LTD.", value: 1 },
+            { srno: "11", suppliercode: "3200051", supplier: "AL NASR TECHNICAL TRADING", value: 1 },
+            { srno: "12", suppliercode: "3200037", supplier: "AL JAMEA TRADING CO.(L.L.C.)", value: 1 },
+            { srno: "13", suppliercode: "3200032", supplier: "ARESCO TRADING EST.", value: 1 },
+            { srno: "14", suppliercode: "3200003", supplier: "ADIL & SADIQ SEAT MNFG. COMPANY", value: 1 },
+            { srno: "15", suppliercode: "3200153", supplier: "EMIRATES SPECIALITIES CO.", value: 1 },
+            { srno: "16", suppliercode: "3200008", supplier: "AL FUTTAIM AUTO & MACHINERY", value: 2 },
+            { srno: "17", suppliercode: "3200017", supplier: "SKY WARDS GENERAL LAND TRP", value: 1 }
+        ],
 
 
-            items: [
-                { srno: "1", itemcode: "A1-021-035", itemname: "20MM CRUSHED AGGREGATE", orders: 1 },
-                { srno: "2", itemcode: "A1-011-021", itemname: "40-20MM CRUSHED AGGREGATE", orders: 4 },
-                { srno: "3", itemcode: "B7-213-001", itemname: "8MM DIA REINF D/STEEL BAR", orders: 1 },
-                { srno: "4", itemcode: "A1-421-043", itemname: "600-800MM FLAT BOULDER CRAZY", orders: 1 },
-                { srno: "5", itemcode: "A1-012-003", itemname: "30-20 MM CRUSHED AGGREGATE", orders: 3 },
-                { srno: "6", itemcode: "A1-011-050", itemname: "10-5MM CRUSHED AGGREGATE", orders: 1 },
-                { srno: "7", itemcode: "A1-011-040", itemname: "25-75MM CRUSHED STONE DELIVER", orders: 1 },
-                { srno: "8", itemcode: "A1-012-053", itemname: "50-100MM CRUSHED LANDSCAPE AGG", orders: 1 },
-                { srno: "9", itemcode: "A1-421-042", itemname: "400-600MM FLAT BOULDER CRAZY", orders: 1 }
+        items: [
+            { srno: "1", itemcode: "A1-021-035", itemname: "20MM CRUSHED AGGREGATE", orders: 1 },
+            { srno: "2", itemcode: "A1-011-021", itemname: "40-20MM CRUSHED AGGREGATE", orders: 4 },
+            { srno: "3", itemcode: "B7-213-001", itemname: "8MM DIA REINF D/STEEL BAR", orders: 1 },
+            { srno: "4", itemcode: "A1-421-043", itemname: "600-800MM FLAT BOULDER CRAZY", orders: 1 },
+            { srno: "5", itemcode: "A1-012-003", itemname: "30-20 MM CRUSHED AGGREGATE", orders: 3 },
+            { srno: "6", itemcode: "A1-011-050", itemname: "10-5MM CRUSHED AGGREGATE", orders: 1 },
+            { srno: "7", itemcode: "A1-011-040", itemname: "25-75MM CRUSHED STONE DELIVER", orders: 1 },
+            { srno: "8", itemcode: "A1-012-053", itemname: "50-100MM CRUSHED LANDSCAPE AGG", orders: 1 },
+            { srno: "9", itemcode: "A1-421-042", itemname: "400-600MM FLAT BOULDER CRAZY", orders: 1 }
+        ]
+    };
 
-
-
-            ]
-        };
-
-        // EVENT LISTENERS
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".view-btn").forEach(btn => {
-                btn.addEventListener("click", function () {
-                    const type = this.getAttribute("data-type");
-                    openTable(type);
-                });
+    // EVENT LISTENERS
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".view-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                const type = this.getAttribute("data-type");
+                openTable(type);
             });
         });
+    });
 
-        // OPEN TABLE
-        function openTable(type) {
-            const modal = document.getElementById("tableModal");
-            const head = document.getElementById("tableHead");
-            const body = document.getElementById("tableBody");
-            const title = document.getElementById("modalTitle");
+    // OPEN TABLE
+    function openTable(type) {
+        const modal = document.getElementById("tableModal");
+        const head = document.getElementById("tableHead");
+        const body = document.getElementById("tableBody");
+        const title = document.getElementById("modalTitle");
 
-            modal.classList.add("open");
+        modal.classList.add("open");
 
-            const data = fullData[type];
+        const data = fullData[type];
 
-            console.log("TYPE:", type);
-            console.log("DATA:", data);
+        console.log("TYPE:", type);
+        console.log("DATA:", data);
 
-            head.innerHTML = "";
-            body.innerHTML = "";
+        head.innerHTML = "";
+        body.innerHTML = "";
 
-            if (!data || data.length === 0) {
-                body.innerHTML = `<tr><td colspan="3">No data available</td></tr>`;
-                title.innerText = "No Data";
-                return;
-            }
+        if (!data || data.length === 0) {
+            body.innerHTML = `<tr><td colspan="3">No data available</td></tr>`;
+            title.innerText = "No Data";
+            return;
+        }
 
-            // ITEMS TABLE
-            if (type === "items") {
-                title.innerText = "Items by Order Value";
+        // ITEMS TABLE
+        if (type === "items") {
+            title.innerText = "Items by Order Value";
 
-                head.innerHTML = `
+            head.innerHTML = `
                     <tr>
+                        <th>SR No.</th>
                         <th>Item Code</th>
                         <th>Item Name</th>
                         <th>Total Orders</th>
                     </tr>
                 `;
 
-                data.forEach(d => {
-                    body.innerHTML += `
+            data.forEach(d => {
+                body.innerHTML += `
                         <tr>
-                           
+                            <td>${d.srno}</td>
                             <td>${d.itemcode}</td>
                             <td>${d.itemname}</td>
                             <td>${d.orders}</td>
                         </tr>
                     `;
-                });
+            });
 
-                return;
-            }
+            return;
+        }
 
-            // RANK TABLE
-            if (type === "rank") {
-                title.innerText = "All Suppliers by Order Count";
+        // RANK TABLE
+        if (type === "rank") {
+            title.innerText = "All Suppliers by Order Count";
 
-                head.innerHTML = `
+            head.innerHTML = `
                     <tr>
+                        <th>SR No.</th>
                         <th>Supplier Code</th>
                         <th>Supplier</th>
                         <th>Orders</th>
                     </tr>
                 `;
 
-                data.forEach(d => {
-                    body.innerHTML += `
+            data.forEach(d => {
+                body.innerHTML += `
                         <tr>
+                            <td>${d.srno}</td>
                             <td>${d.suppliercode}</td>
                             <td>${d.supplier}</td>
                             <td>${d.orders}</td>
                         </tr>
                     `;
-                });
+            });
 
-                return;
-            }
+            return;
+        }
 
-            //ORDERS - Supplier by Order Value
+        //ORDERS - Supplier by Order Value
 
-            if (type === "order") {
-                title.innerText = "Top Orders by Supplier";
+        if (type === "order") {
+            title.innerText = "Top Orders by Supplier";
 
-                head.innerHTML = `
+            head.innerHTML = `
         <tr>
+            <th>SR No.</th>
             <th>Supplier Code</th>
             <th>Supplier Name</th>
             <th>Value</th>
         </tr>
     `;
 
-                const grouped = Object.values(
-                    data.reduce((acc, curr) => {
-                        if (!acc[curr.supplier]) {
-                            acc[curr.supplier] = {
-                                suppliercode: curr.suppliercode,
-                                supplier: curr.supplier,
-                                value: 0
-                            };
-                        }
-                        acc[curr.supplier].value += curr.value;
-                        return acc;
-                    }, {})
-                );
+            const grouped = Object.values(
+                data.reduce((acc, curr) => {
+                    if (!acc[curr.supplier]) {
+                        acc[curr.supplier] = {
+                            suppliercode: curr.suppliercode,
+                            supplier: curr.supplier,
+                            value: 0
+                        };
+                    }
+                    acc[curr.supplier].value += curr.value;
+                    return acc;
+                }, {})
+            );
 
-                const sorted = grouped
-                    .sort((a, b) => b.value - a.value)
-                    .slice(0, 5);
+            const sorted = grouped
+                .sort((a, b) => b.value - a.value)
+                .slice(0, 5);
 
-                sorted.forEach(d => {
-                    body.innerHTML += `
-            <tr>
-                <td>${d.suppliercode}</td>
-                <td>${d.supplier}</td>
-                <td>${Number(d.value).toLocaleString()}</td>
-            </tr>
-        `;
-                });
+            sorted.forEach((d, index) => {
+                body.innerHTML += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${d.suppliercode}</td>
+            <td>${d.supplier}</td>
+            <td>${Number(d.value).toLocaleString()}</td>
+        </tr>
+    `;
+            });
 
-                return;
-            }
+            return;
+        }
 
 
-            // DEFAULT (PIE / BAR → SPEND TABLE)
-            title.innerText = "All Supplier Spend";
+        // DEFAULT (PIE / BAR → SPEND TABLE)
+        title.innerText = "All Supplier Spend";
 
-            head.innerHTML = `
+        head.innerHTML = `
                 <tr>
+                    <th>SR No.</th>
                     <th>Supplier Code</th>
                     <th>Supplier</th>
                     <th>Spend (AED)</th>
                 </tr>
             `;
 
-            data.forEach(d => {
-                body.innerHTML += `
+        data.forEach(d => {
+            body.innerHTML += `
                     <tr>
+                        <td>${d.srno}</td>
                         <td>${d.suppliercode}</td>
                         <td>${d.supplier}</td>
                         <td>${Number(d.spend).toLocaleString()}</td>
                     </tr>
                 `;
-            });
-        }
+        });
+    }
 
-        // CLOSE MODAL
-        function closeTableModal() {
-            document.getElementById("tableModal").classList.remove("open");
-        }
-    </script>
+    // CLOSE MODAL
+    function closeTableModal() {
+        document.getElementById("tableModal").classList.remove("open");
+    }
+</script>
 
     <!-- MODAL -->
     <div class="table-modal" id="tableModal">
