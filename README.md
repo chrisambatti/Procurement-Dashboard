@@ -5,7 +5,7 @@
 ---
 
 ## 📸 Preview
-- ![Dashboard](images/demo.png) 
+- ![Dashboard](C:\Users\CHRISTOPHER\Aegle\wwwroot\images\logo.png) 
 | Desktop | Mobile |
 |---|---|
 | Full single-screen layout with 6 live charts | Stacked responsive layout with compact header |
