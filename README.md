@@ -5,7 +5,7 @@
 ---
 
 ## 📸 Preview
-
+- ![Dashboard](images/demo.png) 
 | Desktop | Mobile |
 |---|---|
 | Full single-screen layout with 6 live charts | Stacked responsive layout with compact header |
