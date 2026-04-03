@@ -466,8 +466,151 @@ async function refreshDashboard(department = '') {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// INITIALIZATION
+// MODAL & VIEW ALL FUNCTIONALITY
 // ═══════════════════════════════════════════════════════════════════════════
+
+const modalConfig = {
+    pie: {
+        title: 'All Suppliers by Spend',
+        columns: ['Supplier Name', 'Total Spend', 'Percentage'],
+        endpoint: '/api/procurement/top5-supplier-spend'
+    },
+    bar: {
+        title: 'All Suppliers by Spend Distribution',
+        columns: ['Supplier Name', 'Total Spend', 'Percentage'],
+        endpoint: '/api/procurement/top5-supplier-spend'
+    },
+    rank: {
+        title: 'All Suppliers by Order Count',
+        columns: ['Rank', 'Supplier Name', 'Order Count'],
+        endpoint: '/api/procurement/top5-supplier-order-count'
+    },
+    items: {
+        title: 'All Items by Order Value',
+        columns: ['Item Name', 'Total Value'],
+        endpoint: '/api/procurement/items-by-order-value'
+    },
+    order: {
+        title: 'All Suppliers by Order Value',
+        columns: ['Rank', 'Supplier Name', 'Total Value'],
+        endpoint: '/api/procurement/supplier-by-order-value'
+    }
+};
+
+async function openViewAll(type) {
+    const config = modalConfig[type];
+    if (!config) {
+        console.warn(`⚠️ Unknown view type: ${type}`);
+        return;
+    }
+
+    try {
+        console.log(`🔍 Opening modal for: ${type}`);
+        const modal = document.getElementById('viewAllModal');
+        const title = document.getElementById('modalTitle');
+        const tableHeader = document.getElementById('tableHeader');
+        const tableBody = document.getElementById('tableBody');
+
+        // Set title
+        title.textContent = config.title;
+
+        // Build header
+        tableHeader.innerHTML = config.columns.map(col => 
+            `<th>${col}</th>`
+        ).join('');
+
+        // Fetch data
+        const response = await fetch(config.endpoint);
+        if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
+        const data = await response.json();
+
+        // Build body based on type
+        tableBody.innerHTML = buildTableRows(type, data, config);
+
+        // Show modal
+        modal.classList.add('open');
+
+    } catch (error) {
+        console.error(`❌ Error opening modal:`, error);
+        alert('Error loading data. Please try again.');
+    }
+}
+
+function buildTableRows(type, data, config) {
+    switch (type) {
+        case 'pie':
+        case 'bar':
+            return data.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${fmtFull(item.total)}</td>
+                    <td>${(item.percentage || 0).toFixed(2)}%</td>
+                </tr>
+            `).join('');
+
+        case 'rank':
+            return data.map((item, idx) => `
+                <tr>
+                    <td>${item.rank || idx + 1}</td>
+                    <td>${item.name}</td>
+                    <td>${item.count}</td>
+                </tr>
+            `).join('');
+
+        case 'items':
+            return data.map((item, idx) => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${fmtFull(item.total)}</td>
+                </tr>
+            `).join('');
+
+        case 'order':
+            return data.map((item, idx) => `
+                <tr>
+                    <td>${item.rank || idx + 1}</td>
+                    <td>${item.name}</td>
+                    <td>${fmtFull(item.total)}</td>
+                </tr>
+            `).join('');
+
+        default:
+            return '<tr><td colspan="' + config.columns.length + '">No data</td></tr>';
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('viewAllModal');
+    modal.classList.remove('open');
+}
+
+// Close modal when clicking overlay
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('viewAllModal');
+    if (modal) {
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+    // Add click handlers to View All buttons
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const type = this.dataset.type;
+            openViewAll(type);
+        });
+    });
+});
+
+// Optional: Department filter (if you add it later)
+const deptDropdown = document.getElementById('deptDropdown');
+if (deptDropdown) {
+    deptDropdown.addEventListener('change', function () {
+        refreshDashboard(this.value);
+    });
+}
 
 // Register ChartDataLabels plugin
 if (window.ChartDataLabels) {
@@ -481,13 +624,5 @@ document.addEventListener('DOMContentLoaded', function () {
     refreshDashboard();
     setInterval(() => refreshDashboard(), 30000);
 });
-
-// Optional: Department filter (if you add it later)
-const deptDropdown = document.getElementById('deptDropdown');
-if (deptDropdown) {
-    deptDropdown.addEventListener('change', function () {
-        refreshDashboard(this.value);
-    });
-}
 
 console.log('✅ Dashboard.js loaded');

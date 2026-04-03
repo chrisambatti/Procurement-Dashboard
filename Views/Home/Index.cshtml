@@ -678,7 +678,7 @@
             background: var(--card);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 14px 16px;
+            padding: 10px 20px;
             display: flex;
             flex-direction: column;
             transition: background 0.3s ease;
@@ -1478,14 +1478,9 @@
                 font-size: 9.5px;
                 padding: 1px 6px;
             }
-
-            .notif-dropdown {
-                width: calc(100vw - 28px);
-                right: -40px;
-            }
         }
 
-        /*MOBILE ≤ 599px - Samsung Galaxy A51/71, smaller phones*/
+        /* MOBILE ≤ 599px - Samsung Galaxy A51/71, smaller phones */
         @@media (max-width: 599px) {
             body {
                 overflow-x: hidden;
@@ -1710,55 +1705,145 @@
             font-weight: 500;
         }
 
-        .table-modal {
+        /* ── MODAL ── */
+        .modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.4);
             z-index: 1000;
-            align-items: center;
-            text-align:center;
-            justify-content: center;
-
+            background: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.2s ease;
         }
 
-        .table-modal.open {
+        .modal.open {
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .table-modal-content {
-            width: 80%;
-            max-width: 900px;
-            max-height: 80vh;
+        .modal-content {
             background: var(--card);
             border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .table-modal-header {
-            padding: 14px;
+            box-shadow: 0 20px 64px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
             display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            font-weight:700;
+            flex-direction: column;
+            animation: slideUp 0.3s ease;
         }
 
-        .close-btn {
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
             cursor: pointer;
-            height:20px;
-            width:20px;
+            color: var(--muted);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--prog-track);
+            color: var(--text);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow: auto;
+            padding: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
         }
 
         .data-table {
             width: 100%;
             border-collapse: collapse;
-
+            font-size: 12px;
         }
 
-        .data-table th,
+        .data-table thead {
+            position: sticky;
+            top: 0;
+            background: var(--prog-track);
+            z-index: 10;
+        }
+
+        .data-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
         .data-table td {
-           padding: 10px;
-           border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--rank-bg);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @@keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile adjustments */
+        @@media (max-width: 599px) {
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .data-table {
+                font-size: 11px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 8px 12px;
+            }
         }
     </style>
 </head>
@@ -1834,6 +1919,26 @@
         <footer class="footer">
             Aegle • © 2026 Wade Adams Group • <span action="v1.0" class="footer-version">Version•1.0</span>
         </footer>
+            <div class="modal" id="viewAllModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">View All</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-wrapper">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr id="tableHeader"></tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     </main>
 
     <script>
