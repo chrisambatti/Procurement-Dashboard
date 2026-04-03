@@ -9,9 +9,9 @@
 
   <ItemGroup>
     <!-- Dapper — lightweight micro-ORM for MySQL queries -->
-    <PackageReference Include="Dapper"                        Version="2.1.35"  />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
     <!-- MySqlConnector — ADO.NET driver (fully async, MIT license) -->
-    <PackageReference Include="MySqlConnector"               Version="2.3.7"   />
   </ItemGroup>
 
 </Project>

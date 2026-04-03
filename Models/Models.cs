@@ -1,6 +1,6 @@
 namespace Aegle.Models
 {
-    // ── KPI ──────────────────────────────────────────────────────────────
+    // ── KPI ──
 
     public class TopSupplierInfo
     {
@@ -20,7 +20,7 @@ namespace Aegle.Models
         public decimal        OrdersGrowth         { get; set; }
     }
 
-    // ── Supplier Spend ────────────────────────────────────────────────────
+    // ── Supplier Spend ──
 
     public class SupplierSpendDto
     {
@@ -29,7 +29,7 @@ namespace Aegle.Models
         public decimal Percentage { get; set; }
     }
 
-    // ── Supplier Order Count ──────────────────────────────────────────────
+    // ── Supplier Order Count ──
 
     public class SupplierOrderCountDto
     {
@@ -38,7 +38,7 @@ namespace Aegle.Models
         public int    Count { get; set; }
     }
 
-    // ── Item Value ────────────────────────────────────────────────────────
+    // ── Item Value ──
 
     public class ItemValueDto
     {
@@ -46,7 +46,7 @@ namespace Aegle.Models
         public decimal Total { get; set; }
     }
 
-    // ── Supplier Value (ranked) ───────────────────────────────────────────
+    // ── Supplier Value (ranked) ──
 
     public class SupplierValueDto
     {
