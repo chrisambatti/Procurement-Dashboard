@@ -68,7 +68,7 @@ function initPieChart(data) {
             cutout: 0,
             responsive: true,
             maintainAspectRatio: true,
-            animation: { duration: 1200, easing: 'easeInOutQuart' },
+            animation: { duration: 2000, easing: 'easeInOutQuart' },
             plugins: {
                 legend: { display: false },
                 datalabels: { display: false },
@@ -106,7 +106,7 @@ function initBarChart(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 1200, easing: 'easeInOutQuart' },
+            animation: { duration: 2000, easing: 'easeInOutQuart' },
             plugins: {
                 legend: { display: false },
                 datalabels: {
@@ -174,7 +174,7 @@ function initHbarChart(data) {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
-            animation: { duration: 1200, easing: 'easeInOutQuart' },
+            animation: { duration: 2000, easing: 'easeInOutQuart' },
             plugins: {
                 legend: { display: false },
                 datalabels: {

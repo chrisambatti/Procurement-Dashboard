@@ -67,26 +67,26 @@ namespace Aegle.Services
             using var conn = CreateConnection();
 
             var sql = @"
-                WITH ranked AS (
-                    SELECT TOP 5 
-                         
-                        supplier_name,
-                        SUM(amount) AS Total
-                    FROM dbo.db_orders
-                
-                    GROUP BY supplier_name
-                    ORDER BY Total DESC
-                ),
-                grand AS (
-                    SELECT SUM(Total) AS GrandTotal FROM ranked
-                )
-                SELECT 
-                    r.supplier_name AS Name,
-                    r.Total AS Total,
-                    ROUND(r.Total / g.GrandTotal * 100, 1) AS Percentage
-                FROM ranked r
-                CROSS JOIN grand g
-                ORDER BY r.Total DESC;";
+        WITH ranked AS (
+            SELECT TOP 5
+                supplier_id,
+                supplier_name,
+                SUM(amount) AS Total
+            FROM dbo.db_orders
+            GROUP BY supplier_id, supplier_name
+            ORDER BY Total DESC
+        ),
+        grand AS (
+            SELECT SUM(Total) AS GrandTotal FROM ranked
+        )
+        SELECT
+            r.supplier_id AS SupplierId,
+            r.supplier_name AS Name,
+            r.Total AS Total,
+            ROUND(r.Total / g.GrandTotal * 100, 1) AS Percentage
+        FROM ranked r
+        CROSS JOIN grand g
+        ORDER BY r.Total DESC;";
 
             return await conn.QueryAsync<SupplierSpendDto>(sql);
         }

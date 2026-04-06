@@ -22,6 +22,7 @@ namespace Aegle.Models
     // ── Supplier Spend ──
     public class SupplierSpendDto
     {
+        public int SupplierId { get; set; }       
         public string Name { get; set; } = string.Empty;
         public decimal Total { get; set; }
         public decimal Percentage { get; set; }
