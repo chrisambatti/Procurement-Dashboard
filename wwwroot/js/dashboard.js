@@ -476,7 +476,7 @@ const modalConfig = {
     },
     items: {
         title: 'All Items by Order Value',
-        columns: ['Item Code', 'Item Name', 'TOrder', 'Total Value'],
+        columns: ['Item Code', 'Item Name', 'Total Order', 'Total Value'],
         endpoint: '/api/procurement/items-by-order-value'
     },
     order: {
