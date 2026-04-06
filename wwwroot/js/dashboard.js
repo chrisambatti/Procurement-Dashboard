@@ -4,9 +4,7 @@
 const PALETTE = ['#5B8FE8', '#7C6FD4', '#2CB5A0', '#F0A030', '#E85B6F'];
 let pieChart = null, barChart = null, hbarChart = null;
 
-// ═══════════════════════════════════════════════════════════════════════════
 // UTILITY FUNCTIONS
-// ═══════════════════════════════════════════════════════════════════════════
 
 function fmtM(v) {
     if (v >= 1e6) return `AED ${(v / 1e6).toFixed(1)}M`;
@@ -43,9 +41,7 @@ function truncate(s, n) {
     return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
 // CHART INITIALIZATION
-// ═══════════════════════════════════════════════════════════════════════════
 
 function initPieChart(data) {
     const ctx = document.getElementById('pieChart');
@@ -221,9 +217,7 @@ function initHbarChart(data) {
     });
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
 // UPDATE UI COMPONENTS
-// ═══════════════════════════════════════════════════════════════════════════
 
 function updateKPIs(kpis) {
     console.log('📊 Updating KPI cards:', kpis);
@@ -397,9 +391,7 @@ function updateItemProgress(data) {
     }, 100);
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
 // MAIN REFRESH FUNCTION
-// ═══════════════════════════════════════════════════════════════════════════
 
 async function refreshDashboard(department = '') {
     try {
@@ -465,9 +457,7 @@ async function refreshDashboard(department = '') {
     }
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
 // MODAL & VIEW ALL FUNCTIONALITY
-// ═══════════════════════════════════════════════════════════════════════════
 
 const modalConfig = {
     pie: {
