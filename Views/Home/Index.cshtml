@@ -1909,7 +1909,7 @@
                 <div class="hbar-chart-wrap"><canvas id="hbarChart"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><div class="card-title">Supplier by Order Value</div><button class="card-badge view-btn" data-type="order" id="hbar-badge">View all</button></div>
+                <div class="card-header"><div class="card-title">Supplier by Order Value</div><button class="card-badge view-btn" data-type="order" >View all</button></div>
                 <div class="card-sub">Ranked by cumulative spend · FY 2025-26</div>
                 <div class="progress-list" id="supplierProgress"></div>
             </div>
@@ -1945,89 +1945,6 @@
         </div>
     </div>
     </main>
-
-    <script>
-        /* ── THEME ── */
-        function toggleTheme(cb) {
-            const theme = cb.checked ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('aegle_theme', theme);
-            if (window.updateChartsTheme) updateChartsTheme();
-        }
-
-        (function () {
-            const saved = localStorage.getItem('aegle_theme') || 'light';
-            document.documentElement.setAttribute('data-theme', saved);
-            if (saved === 'dark') {
-                document.addEventListener('DOMContentLoaded', function () {
-                    const cb = document.getElementById('themeToggle');
-                    if (cb) cb.checked = true;
-                });
-            }
-        })();
-
-        /* ── DROPDOWNS ── */
-        function closeAll() {
-            document.getElementById('notifDropdown').classList.remove('open');
-            document.getElementById('userDropdown').classList.remove('open');
-            document.getElementById('overlay').classList.remove('open');
-            document.getElementById('userChevron').style.transform = 'rotate(0deg)';
-        }
-
-        function toggleBell(e) {
-            e.stopPropagation();
-            const dd = document.getElementById('notifDropdown');
-            const isOpen = dd.classList.contains('open');
-            closeAll();
-            if (!isOpen) { dd.classList.add('open'); document.getElementById('overlay').classList.add('open'); }
-        }
-
-        function markRead(item) {
-            item.classList.remove('unread');
-            const dot = item.querySelector('.notif-unread-dot');
-            if (dot) dot.remove();
-            updateBellCount();
-        }
-
-        function markAllRead() {
-            document.querySelectorAll('.notif-item.unread').forEach(item => {
-                item.classList.remove('unread');
-                const dot = item.querySelector('.notif-unread-dot');
-                if (dot) dot.remove();
-            });
-            updateBellCount();
-        }
-
-        function updateBellCount() {
-            const count = document.querySelectorAll('.notif-item.unread').length;
-            const countEl = document.getElementById('notifCount');
-            const bellDot = document.getElementById('bellDot');
-            if (count === 0) {
-                if (countEl) countEl.textContent = 'All read';
-                if (bellDot) bellDot.style.display = 'none';
-            } else {
-                if (countEl) countEl.textContent = `${count} new`;
-                if (bellDot) bellDot.style.display = 'block';
-            }
-        }
-
-        function toggleUser(e) {
-            e.stopPropagation();
-            const dd = document.getElementById('userDropdown');
-            const isOpen = dd.classList.contains('open');
-            closeAll();
-            if (!isOpen) {
-                dd.classList.add('open');
-                document.getElementById('overlay').classList.add('open');
-                document.getElementById('userChevron').style.transform = 'rotate(180deg)';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            refreshDashboard();
-            setInterval(() => refreshDashboard(''), 30_000);
-        });
-    </script>
 
         <script src="/js/dashboard.js"></script>
 </body>
