@@ -82,7 +82,6 @@ function initPieChart(data) {
         }
     });
 }
-
 function initBarChart(data) {
     const ctx = document.getElementById('barChart');
     if (!ctx) return;

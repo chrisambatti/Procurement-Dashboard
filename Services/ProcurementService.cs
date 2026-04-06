@@ -73,6 +73,7 @@ namespace Aegle.Services
                         supplier_name,
                         SUM(amount) AS Total
                     FROM dbo.db_orders
+                
                     GROUP BY supplier_name
                     ORDER BY Total DESC
                 ),
