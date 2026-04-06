@@ -143,35 +143,36 @@ namespace Aegle.Services
 
         #region Items
         // All items by order value
+        // Get all items by order value (View All)
         public async Task<IEnumerable<ItemValueDto>> GetItemsByOrderValueAsync(string? department)
         {
             using var conn = CreateConnection();
 
             var sql = @"
-                SELECT 
-                    item_code AS Code,
-                    LTRIM(RTRIM(item_name)) AS Name,
-                    total_order_count AS [Order],
-                    total_order_value AS Total
-                FROM dbo.db_item_count
-                ORDER BY total_order_value DESC;";
+        SELECT 
+            item_code AS Code,
+            LTRIM(RTRIM(item_name)) AS Name,
+            total_order_count AS [Order],
+            total_order_value AS Total
+        FROM dbo.db_item_count
+        ORDER BY total_order_value DESC;";
 
             return await conn.QueryAsync<ItemValueDto>(sql);
         }
 
-        // Top 5 items by order value
+        // Get top 5 items by order value
         public async Task<IEnumerable<ItemValueDto>> GetTop5ItemsByOrderValueAsync(string? department)
         {
             using var conn = CreateConnection();
 
             var sql = @"
-                SELECT TOP 5
-                    item_code AS Code,
-                    LTRIM(RTRIM(item_name)) AS Name,
-                    total_order_count AS [Order],
-                    total_order_value AS Total
-                FROM dbo.db_item_count
-                ORDER BY total_order_value DESC;";
+        SELECT TOP 5
+            item_code AS Code,
+            LTRIM(RTRIM(item_name)) AS Name,
+            total_order_count AS [Order],
+            total_order_value AS Total
+        FROM dbo.db_item_count
+        ORDER BY total_order_value DESC;";
 
             return await conn.QueryAsync<ItemValueDto>(sql);
         }
