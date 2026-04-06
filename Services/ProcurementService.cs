@@ -114,11 +114,13 @@ namespace Aegle.Services
             using var conn = CreateConnection();
 
             var sql = @"
-                SELECT supplier_name AS Name,
-                       COALESCE(SUM(amount), 0) AS Total
-                  FROM dbo.db_orders
-                 GROUP BY supplier_name
-                 ORDER BY Total DESC;";
+        SELECT 
+            item_code AS Code,
+            LTRIM(RTRIM(item_name)) AS Name,
+            total_order_count AS [Order],
+            total_order_value AS Total
+        FROM dbo.db_item_count
+        ORDER BY total_order_value DESC;";
 
             return await conn.QueryAsync<ItemValueDto>(sql);
         }

@@ -477,7 +477,7 @@ const modalConfig = {
     },
     items: {
         title: 'All Items by Order Value',
-        columns: ['Item Name', 'Total Value'],
+        columns: ['Item Id', 'Item Name', 'Total Order', 'Total Value'],
         endpoint: '/api/procurement/items-by-order-value'
     },
     order: {
@@ -532,6 +532,7 @@ function buildTableRows(type, data, config) {
         case 'bar':
             return data.map(item => `
                 <tr>
+                   
                     <td>${item.name}</td>
                     <td>${fmtFull(item.total)}</td>
                     <td>${(item.percentage || 0).toFixed(2)}%</td>
@@ -548,12 +549,14 @@ function buildTableRows(type, data, config) {
             `).join('');
 
         case 'items':
-            return data.map((item, idx) => `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${fmtFull(item.total)}</td>
-                </tr>
-            `).join('');
+            return data.map(item => `
+        <tr>
+            <td>${item.code}</td>
+            <td>${item.name || 'N/A'}</td>
+            <td>${item.order}</td>
+            <td>${fmtFull(item.total)}</td>
+        </tr>
+    `).join('');
 
         case 'order':
             return data.map((item, idx) => `
